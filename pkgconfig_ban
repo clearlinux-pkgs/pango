@@ -1,0 +1,9 @@
+#
+# This file contains pkgconfig build requirements that get picked up but are 
+# undesirable. One name per line, no whitespace.
+#
+cairo-win32
+cairo-quartz-font
+cairo-pdf
+cairo-ps
+libthai
