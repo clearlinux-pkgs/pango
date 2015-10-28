@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.36.8
-Release  : 13
+Release  : 14
 URL      : http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz
 Summary  : Freetype 2.0 and fontconfig font support for Pango
@@ -48,6 +48,7 @@ Summary: dev components for the pango package.
 Group: Development
 Requires: pango-lib
 Requires: pango-bin
+Provides: pango-devel
 
 %description dev
 dev components for the pango package.
