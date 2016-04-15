@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.36.8
-Release  : 16
+Release  : 17
 URL      : http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz
 Summary  : Freetype 2.0 and fontconfig font support for Pango
@@ -71,17 +71,19 @@ lib components for the pango package.
 
 
 %prep
+cd ..
 %setup -q -n pango-1.36.8
 
 %build
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
+export FCFLAGS="$CFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
+export FFLAGS="$CFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
+export CXXFLAGS="$CXXFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
 %configure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft
 make V=1  %{?_smp_mflags}
-
-%check
-export http_proxy=http://127.0.0.1:9/
-export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
-make check || :
 
 %install
 rm -rf %{buildroot}
