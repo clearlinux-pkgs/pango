@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.36.8
-Release  : 17
+Release  : 18
 URL      : http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz
 Summary  : Freetype 2.0 and fontconfig font support for Pango
@@ -27,6 +27,7 @@ BuildRequires : pkgconfig(fontconfig)
 BuildRequires : pkgconfig(freetype2)
 BuildRequires : pkgconfig(harfbuzz)
 BuildRequires : pkgconfig(xft)
+Patch1: fmv.patch
 
 %description
 Pango is a library for layout and rendering of text, with an emphasis
@@ -73,15 +74,16 @@ lib components for the pango package.
 %prep
 cd ..
 %setup -q -n pango-1.36.8
+%patch1 -p1
 
 %build
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
-export FCFLAGS="$CFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
-export FFLAGS="$CFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
-export CXXFLAGS="$CXXFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
+export CFLAGS="$CFLAGS -falign-functions=32 -fno-semantic-interposition -O3 "
+export FCFLAGS="$CFLAGS -falign-functions=32 -fno-semantic-interposition -O3 "
+export FFLAGS="$CFLAGS -falign-functions=32 -fno-semantic-interposition -O3 "
+export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-semantic-interposition -O3 "
 %configure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft
 make V=1  %{?_smp_mflags}
 
