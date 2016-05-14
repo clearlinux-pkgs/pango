@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.36.8
-Release  : 21
+Release  : 22
 URL      : http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz
 Summary  : Freetype 2.0 and fontconfig font support for Pango
@@ -12,10 +12,13 @@ Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
 Requires: pango-bin
 Requires: pango-lib
+Requires: pango-data
 Requires: pango-doc
 BuildRequires : clear-font
 BuildRequires : docbook-xml
 BuildRequires : font-bitstream-type1
+BuildRequires : gobject-introspection
+BuildRequires : gobject-introspection-dev
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
 BuildRequires : libxslt-bin
@@ -27,7 +30,6 @@ BuildRequires : pkgconfig(fontconfig)
 BuildRequires : pkgconfig(freetype2)
 BuildRequires : pkgconfig(harfbuzz)
 BuildRequires : pkgconfig(xft)
-Patch1: fmv.patch
 
 %description
 Pango is a library for layout and rendering of text, with an emphasis
@@ -39,9 +41,18 @@ and font handling for GTK+-2.x.
 %package bin
 Summary: bin components for the pango package.
 Group: Binaries
+Requires: pango-data
 
 %description bin
 bin components for the pango package.
+
+
+%package data
+Summary: data components for the pango package.
+Group: Data
+
+%description data
+data components for the pango package.
 
 
 %package dev
@@ -49,6 +60,7 @@ Summary: dev components for the pango package.
 Group: Development
 Requires: pango-lib
 Requires: pango-bin
+Requires: pango-data
 Provides: pango-devel
 
 %description dev
@@ -66,24 +78,23 @@ doc components for the pango package.
 %package lib
 Summary: lib components for the pango package.
 Group: Libraries
+Requires: pango-data
 
 %description lib
 lib components for the pango package.
 
 
 %prep
-cd ..
 %setup -q -n pango-1.36.8
-%patch1 -p1
 
 %build
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -falign-functions=32 -fno-semantic-interposition -O3 "
-export FCFLAGS="$CFLAGS -falign-functions=32 -fno-semantic-interposition -O3 "
-export FFLAGS="$CFLAGS -falign-functions=32 -fno-semantic-interposition -O3 "
-export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-semantic-interposition -O3 "
+export CFLAGS="$CFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
+export FCFLAGS="$CFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
+export FFLAGS="$CFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
+export CXXFLAGS="$CXXFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
 %configure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft
 make V=1  %{?_smp_mflags}
 
@@ -93,11 +104,22 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
+/usr/lib64/girepository-1.0/Pango-1.0.typelib
+/usr/lib64/girepository-1.0/PangoCairo-1.0.typelib
+/usr/lib64/girepository-1.0/PangoFT2-1.0.typelib
+/usr/lib64/girepository-1.0/PangoXft-1.0.typelib
 
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/pango-querymodules
 /usr/bin/pango-view
+
+%files data
+%defattr(-,root,root,-)
+/usr/share/gir-1.0/Pango-1.0.gir
+/usr/share/gir-1.0/PangoCairo-1.0.gir
+/usr/share/gir-1.0/PangoFT2-1.0.gir
+/usr/share/gir-1.0/PangoXft-1.0.gir
 
 %files dev
 %defattr(-,root,root,-)

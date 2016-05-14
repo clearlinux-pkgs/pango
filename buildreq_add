@@ -4,3 +4,6 @@
 #
 font-bitstream-type1
 clear-font
+gobject-introspection-dev
+gobject-introspection
+
