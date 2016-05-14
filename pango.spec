@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.36.8
-Release  : 22
+Release  : 23
 URL      : http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz
 Summary  : Freetype 2.0 and fontconfig font support for Pango
@@ -91,10 +91,10 @@ lib components for the pango package.
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
-export FCFLAGS="$CFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
-export FFLAGS="$CFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
-export CXXFLAGS="$CXXFLAGS -flto -falign-functions=32 -fno-semantic-interposition -O3 "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition -flto "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition -flto "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition -flto "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-semantic-interposition -flto "
 %configure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft
 make V=1  %{?_smp_mflags}
 
@@ -104,10 +104,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-/usr/lib64/girepository-1.0/Pango-1.0.typelib
-/usr/lib64/girepository-1.0/PangoCairo-1.0.typelib
-/usr/lib64/girepository-1.0/PangoFT2-1.0.typelib
-/usr/lib64/girepository-1.0/PangoXft-1.0.typelib
 
 %files bin
 %defattr(-,root,root,-)
@@ -157,6 +153,10 @@ rm -rf %{buildroot}
 /usr/include/pango-1.0/pango/pangoxft-render.h
 /usr/include/pango-1.0/pango/pangoxft.h
 /usr/lib64/*.so
+/usr/lib64/girepository-1.0/Pango-1.0.typelib
+/usr/lib64/girepository-1.0/PangoCairo-1.0.typelib
+/usr/lib64/girepository-1.0/PangoFT2-1.0.typelib
+/usr/lib64/girepository-1.0/PangoXft-1.0.typelib
 /usr/lib64/pkgconfig/*.pc
 
 %files doc
