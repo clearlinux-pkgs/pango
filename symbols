@@ -1,8 +1,11 @@
 libpango-1.0.so.0:pango_alignment_get_type
+libpango-1.0.so.0:pango_attr_background_alpha_new
 libpango-1.0.so.0:pango_attr_background_new
 libpango-1.0.so.0:pango_attr_fallback_new
 libpango-1.0.so.0:pango_attr_family_new
 libpango-1.0.so.0:pango_attr_font_desc_new
+libpango-1.0.so.0:pango_attr_font_features_new
+libpango-1.0.so.0:pango_attr_foreground_alpha_new
 libpango-1.0.so.0:pango_attr_foreground_new
 libpango-1.0.so.0:pango_attr_gravity_hint_new
 libpango-1.0.so.0:pango_attr_gravity_new
@@ -327,6 +330,7 @@ libpango-1.0.so.0:pango_matrix_concat
 libpango-1.0.so.0:pango_matrix_copy
 libpango-1.0.so.0:pango_matrix_free
 libpango-1.0.so.0:pango_matrix_get_font_scale_factor
+libpango-1.0.so.0:pango_matrix_get_font_scale_factors
 libpango-1.0.so.0:pango_matrix_get_type
 libpango-1.0.so.0:pango_matrix_rotate
 libpango-1.0.so.0:pango_matrix_scale
@@ -355,12 +359,14 @@ libpango-1.0.so.0:pango_renderer_draw_layout
 libpango-1.0.so.0:pango_renderer_draw_layout_line
 libpango-1.0.so.0:pango_renderer_draw_rectangle
 libpango-1.0.so.0:pango_renderer_draw_trapezoid
+libpango-1.0.so.0:pango_renderer_get_alpha
 libpango-1.0.so.0:pango_renderer_get_color
 libpango-1.0.so.0:pango_renderer_get_layout
 libpango-1.0.so.0:pango_renderer_get_layout_line
 libpango-1.0.so.0:pango_renderer_get_matrix
 libpango-1.0.so.0:pango_renderer_get_type
 libpango-1.0.so.0:pango_renderer_part_changed
+libpango-1.0.so.0:pango_renderer_set_alpha
 libpango-1.0.so.0:pango_renderer_set_color
 libpango-1.0.so.0:pango_renderer_set_matrix
 libpango-1.0.so.0:pango_reorder_items
@@ -453,9 +459,12 @@ libpangoft2-1.0.so.0:pango_fc_font_key_get_pattern
 libpangoft2-1.0.so.0:pango_fc_font_lock_face
 libpangoft2-1.0.so.0:pango_fc_font_map_add_decoder_find_func
 libpangoft2-1.0.so.0:pango_fc_font_map_cache_clear
+libpangoft2-1.0.so.0:pango_fc_font_map_config_changed
 libpangoft2-1.0.so.0:pango_fc_font_map_create_context
 libpangoft2-1.0.so.0:pango_fc_font_map_find_decoder
+libpangoft2-1.0.so.0:pango_fc_font_map_get_config
 libpangoft2-1.0.so.0:pango_fc_font_map_get_type
+libpangoft2-1.0.so.0:pango_fc_font_map_set_config
 libpangoft2-1.0.so.0:pango_fc_font_map_shutdown
 libpangoft2-1.0.so.0:pango_fc_font_unlock_face
 libpangoft2-1.0.so.0:pango_fc_fontset_key_get_absolute_size
