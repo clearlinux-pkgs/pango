@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.40.2
-Release  : 26
+Release  : 27
 URL      : http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.2.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.2.tar.xz
 Summary  : Freetype 2.0 and fontconfig font support for Pango
