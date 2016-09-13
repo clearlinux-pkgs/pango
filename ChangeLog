@@ -1,3 +1,37 @@
+commit e9471764d19f740f756cf7e6d11aba0cbba3d2ae
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Mon Sep 12 23:50:22 2016 -0400
+
+    1.40.3
+
+ NEWS         | 6 ++++++
+ configure.ac | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+commit 9cb49a3e224bbd5a3e6630aa053e516ecbc46083
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Mon Sep 12 23:36:11 2016 -0400
+
+    Fix build on OS X
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=770729
+
+ pango/pangocoretext-fontmap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit e2ebedbac0d6b04ec298414eec02f4b4692392bc
+Author: Patrick Griffis <tingping@tingping.se>
+Date:   Wed Sep 7 09:10:04 2016 -0400
+
+    Fix exporting pango_cairo_win32_font_map_get_type
+
+    Introduced with commit 1147da131ad13e583e73fed956e5c944e1497bf4
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=771004
+
+ pango/pangocairo-win32.h | 1 +
+ 1 file changed, 1 insertion(+)
+
 commit 16235af893c35af610af2091e0396e6c12ac09ea
 Author: Matthias Clasen <mclasen@redhat.com>
 Date:   Mon Aug 29 08:13:40 2016 -0400
