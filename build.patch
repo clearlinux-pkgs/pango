@@ -4,7 +4,7 @@
  ## Process this file with automake to create Makefile.in.
  
 -SUBDIRS= pango pango-view examples docs tools tests build
-+SUBDIRS= pango pango-view examples docs tools build
++SUBDIRS= pango examples docs tools build
  
  EXTRA_DIST = 			\
  	autogen.sh		\

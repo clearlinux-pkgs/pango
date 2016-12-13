@@ -4,13 +4,12 @@
 #
 Name     : pango
 Version  : 1.40.3
-Release  : 30
+Release  : 31
 URL      : http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.3.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.3.tar.xz
 Summary  : Freetype 2.0 and fontconfig font support for Pango
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
-Requires: pango-bin
 Requires: pango-lib
 Requires: pango-doc
 BuildRequires : automake
@@ -41,6 +40,7 @@ BuildRequires : pkg-config-dev
 BuildRequires : pkgconfig(32cairo)
 BuildRequires : pkgconfig(32fontconfig)
 BuildRequires : pkgconfig(32freetype2)
+BuildRequires : pkgconfig(32harfbuzz)
 BuildRequires : pkgconfig(32xft)
 BuildRequires : pkgconfig(cairo)
 BuildRequires : pkgconfig(cairo-ft)
@@ -48,6 +48,7 @@ BuildRequires : pkgconfig(cairo-png)
 BuildRequires : pkgconfig(cairo-xlib)
 BuildRequires : pkgconfig(fontconfig)
 BuildRequires : pkgconfig(freetype2)
+BuildRequires : pkgconfig(harfbuzz)
 BuildRequires : pkgconfig(xft)
 Patch1: build.patch
 
@@ -58,19 +59,10 @@ is needed; however, most of the work on Pango so far has been done using
 the GTK+ widget toolkit as a test platform. Pango forms the core of text
 and font handling for GTK+-2.x.
 
-%package bin
-Summary: bin components for the pango package.
-Group: Binaries
-
-%description bin
-bin components for the pango package.
-
-
 %package dev
 Summary: dev components for the pango package.
 Group: Development
 Requires: pango-lib
-Requires: pango-bin
 Provides: pango-devel
 
 %description dev
@@ -81,7 +73,6 @@ dev components for the pango package.
 Summary: dev32 components for the pango package.
 Group: Default
 Requires: pango-lib32
-Requires: pango-bin
 Requires: pango-dev
 
 %description dev32
@@ -132,7 +123,7 @@ export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export CFLAGS="$CFLAGS -m32 "
 export CXXFLAGS="$CXXFLAGS -m32 "
 export LDFLAGS="$LDFLAGS -m32 "
-%reconfigure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft --without-cairo --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+%reconfigure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make V=1  %{?_smp_mflags}
 popd
 
@@ -152,12 +143,9 @@ popd
 %files
 %defattr(-,root,root,-)
 /usr/lib32/girepository-1.0/Pango-1.0.typelib
+/usr/lib32/girepository-1.0/PangoCairo-1.0.typelib
 /usr/lib32/girepository-1.0/PangoFT2-1.0.typelib
 /usr/lib32/girepository-1.0/PangoXft-1.0.typelib
-
-%files bin
-%defattr(-,root,root,-)
-/usr/bin/pango-view
 
 %files dev
 %defattr(-,root,root,-)
@@ -212,18 +200,20 @@ popd
 %files dev32
 %defattr(-,root,root,-)
 /usr/lib32/libpango-1.0.so
+/usr/lib32/libpangocairo-1.0.so
 /usr/lib32/libpangoft2-1.0.so
 /usr/lib32/libpangoxft-1.0.so
 /usr/lib32/pkgconfig/32pango.pc
+/usr/lib32/pkgconfig/32pangocairo.pc
 /usr/lib32/pkgconfig/32pangoft2.pc
 /usr/lib32/pkgconfig/32pangoxft.pc
 /usr/lib32/pkgconfig/pango.pc
+/usr/lib32/pkgconfig/pangocairo.pc
 /usr/lib32/pkgconfig/pangoft2.pc
 /usr/lib32/pkgconfig/pangoxft.pc
 
 %files doc
 %defattr(-,root,root,-)
-%doc /usr/share/man/man1/*
 /usr/share/gtk-doc/html/pango/PangoEngineLang.html
 /usr/share/gtk-doc/html/pango/PangoEngineShape.html
 /usr/share/gtk-doc/html/pango/PangoFcDecoder.html
@@ -306,6 +296,8 @@ popd
 %defattr(-,root,root,-)
 /usr/lib32/libpango-1.0.so.0
 /usr/lib32/libpango-1.0.so.0.4000.3
+/usr/lib32/libpangocairo-1.0.so.0
+/usr/lib32/libpangocairo-1.0.so.0.4000.3
 /usr/lib32/libpangoft2-1.0.so.0
 /usr/lib32/libpangoft2-1.0.so.0.4000.3
 /usr/lib32/libpangoxft-1.0.so.0

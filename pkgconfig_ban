@@ -15,5 +15,3 @@ libthai
 32cairo-ft
 32cairo-xlib
 32cairo-png
-32harfbuzz
-harfbuzz
