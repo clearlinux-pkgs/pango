@@ -4,23 +4,21 @@
 #
 Name     : pango
 Version  : 1.40.3
-Release  : 31
+Release  : 32
 URL      : http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.3.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.3.tar.xz
 Summary  : Freetype 2.0 and fontconfig font support for Pango
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
+Requires: pango-bin
 Requires: pango-lib
 Requires: pango-doc
-BuildRequires : automake
-BuildRequires : automake-dev
 BuildRequires : clear-font
 BuildRequires : docbook-xml
 BuildRequires : font-bitstream-type1
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
 BuildRequires : gcc-libstdc++32
-BuildRequires : gettext-bin
 BuildRequires : glib-dev32
 BuildRequires : glibc-dev32
 BuildRequires : glibc-libc32
@@ -31,12 +29,8 @@ BuildRequires : gtk-doc-dev
 BuildRequires : harfbuzz-dev32
 BuildRequires : libX11-dev32
 BuildRequires : libXrender-dev32
-BuildRequires : libtool
-BuildRequires : libtool-dev
 BuildRequires : libxcb-dev32
 BuildRequires : libxslt-bin
-BuildRequires : m4
-BuildRequires : pkg-config-dev
 BuildRequires : pkgconfig(32cairo)
 BuildRequires : pkgconfig(32fontconfig)
 BuildRequires : pkgconfig(32freetype2)
@@ -50,7 +44,6 @@ BuildRequires : pkgconfig(fontconfig)
 BuildRequires : pkgconfig(freetype2)
 BuildRequires : pkgconfig(harfbuzz)
 BuildRequires : pkgconfig(xft)
-Patch1: build.patch
 
 %description
 Pango is a library for layout and rendering of text, with an emphasis
@@ -59,10 +52,19 @@ is needed; however, most of the work on Pango so far has been done using
 the GTK+ widget toolkit as a test platform. Pango forms the core of text
 and font handling for GTK+-2.x.
 
+%package bin
+Summary: bin components for the pango package.
+Group: Binaries
+
+%description bin
+bin components for the pango package.
+
+
 %package dev
 Summary: dev components for the pango package.
 Group: Development
 Requires: pango-lib
+Requires: pango-bin
 Provides: pango-devel
 
 %description dev
@@ -73,6 +75,7 @@ dev components for the pango package.
 Summary: dev32 components for the pango package.
 Group: Default
 Requires: pango-lib32
+Requires: pango-bin
 Requires: pango-dev
 
 %description dev32
@@ -105,7 +108,6 @@ lib32 components for the pango package.
 
 %prep
 %setup -q -n pango-1.40.3
-%patch1 -p1
 pushd ..
 cp -a pango-1.40.3 build32
 popd
@@ -116,17 +118,17 @@ export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
-%reconfigure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft
+%configure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft
 make V=1  %{?_smp_mflags}
+
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export CFLAGS="$CFLAGS -m32 "
 export CXXFLAGS="$CXXFLAGS -m32 "
 export LDFLAGS="$LDFLAGS -m32 "
-%reconfigure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+%configure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make V=1  %{?_smp_mflags}
 popd
-
 %install
 rm -rf %{buildroot}
 pushd ../build32/
@@ -146,6 +148,10 @@ popd
 /usr/lib32/girepository-1.0/PangoCairo-1.0.typelib
 /usr/lib32/girepository-1.0/PangoFT2-1.0.typelib
 /usr/lib32/girepository-1.0/PangoXft-1.0.typelib
+
+%files bin
+%defattr(-,root,root,-)
+/usr/bin/pango-view
 
 %files dev
 %defattr(-,root,root,-)
@@ -214,6 +220,7 @@ popd
 
 %files doc
 %defattr(-,root,root,-)
+%doc /usr/share/man/man1/*
 /usr/share/gtk-doc/html/pango/PangoEngineLang.html
 /usr/share/gtk-doc/html/pango/PangoEngineShape.html
 /usr/share/gtk-doc/html/pango/PangoFcDecoder.html
