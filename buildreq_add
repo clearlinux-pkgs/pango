@@ -6,4 +6,8 @@ font-bitstream-type1
 clear-font
 gobject-introspection-dev
 gobject-introspection
-
+glib-dev32
+harfbuzz-dev32
+libX11-dev32
+libxcb-dev32
+libXrender-dev32

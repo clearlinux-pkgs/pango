@@ -1,0 +1,10 @@
+--- pango-1.40.1/Makefile.am~	2015-04-15 17:37:43.000000000 +0000
++++ pango-1.40.1/Makefile.am	2016-12-13 19:01:51.204232989 +0000
+@@ -1,6 +1,6 @@
+ ## Process this file with automake to create Makefile.in.
+ 
+-SUBDIRS= pango pango-view examples docs tools tests build
++SUBDIRS= pango pango-view examples docs tools build
+ 
+ EXTRA_DIST = 			\
+ 	autogen.sh		\
