@@ -4,9 +4,9 @@
 #
 Name     : pango
 Version  : 1.40.3
-Release  : 32
-URL      : http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.3.tar.xz
-Source0  : http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.3.tar.xz
+Release  : 33
+URL      : https://download.gnome.org/sources/pango/1.40/pango-1.40.3.tar.xz
+Source0  : https://download.gnome.org/sources/pango/1.40/pango-1.40.3.tar.xz
 Summary  : Freetype 2.0 and fontconfig font support for Pango
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
@@ -114,6 +114,7 @@ popd
 
 %build
 export LANG=C
+export SOURCE_DATE_EPOCH=1489024852
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
@@ -123,13 +124,14 @@ make V=1  %{?_smp_mflags}
 
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-export CFLAGS="$CFLAGS -m32 "
-export CXXFLAGS="$CXXFLAGS -m32 "
-export LDFLAGS="$LDFLAGS -m32 "
-%configure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+export CFLAGS="$CFLAGS -m32"
+export CXXFLAGS="$CXXFLAGS -m32"
+export LDFLAGS="$LDFLAGS -m32"
+%configure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make V=1  %{?_smp_mflags}
 popd
 %install
+export SOURCE_DATE_EPOCH=1489024852
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
