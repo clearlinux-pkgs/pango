@@ -4,13 +4,14 @@
 #
 Name     : pango
 Version  : 1.40.3
-Release  : 33
+Release  : 34
 URL      : https://download.gnome.org/sources/pango/1.40/pango-1.40.3.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.40/pango-1.40.3.tar.xz
 Summary  : Freetype 2.0 and fontconfig font support for Pango
 Group    : Development/Tools
-License  : GPL-2.0 LGPL-2.0
+License  : LGPL-2.0
 Requires: pango-bin
+Requires: pango-data
 Requires: pango-lib
 Requires: pango-doc
 BuildRequires : clear-font
@@ -55,9 +56,18 @@ and font handling for GTK+-2.x.
 %package bin
 Summary: bin components for the pango package.
 Group: Binaries
+Requires: pango-data
 
 %description bin
 bin components for the pango package.
+
+
+%package data
+Summary: data components for the pango package.
+Group: Data
+
+%description data
+data components for the pango package.
 
 
 %package dev
@@ -65,6 +75,7 @@ Summary: dev components for the pango package.
 Group: Development
 Requires: pango-lib
 Requires: pango-bin
+Requires: pango-data
 Provides: pango-devel
 
 %description dev
@@ -76,6 +87,7 @@ Summary: dev32 components for the pango package.
 Group: Default
 Requires: pango-lib32
 Requires: pango-bin
+Requires: pango-data
 Requires: pango-dev
 
 %description dev32
@@ -93,6 +105,7 @@ doc components for the pango package.
 %package lib
 Summary: lib components for the pango package.
 Group: Libraries
+Requires: pango-data
 
 %description lib
 lib components for the pango package.
@@ -101,6 +114,7 @@ lib components for the pango package.
 %package lib32
 Summary: lib32 components for the pango package.
 Group: Default
+Requires: pango-data
 
 %description lib32
 lib32 components for the pango package.
@@ -114,7 +128,7 @@ popd
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1489024852
+export SOURCE_DATE_EPOCH=1491326317
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
@@ -131,7 +145,7 @@ export LDFLAGS="$LDFLAGS -m32"
 make V=1  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1489024852
+export SOURCE_DATE_EPOCH=1491326317
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -154,6 +168,14 @@ popd
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/pango-view
+
+%files data
+%defattr(-,root,root,-)
+/usr/lib64/girepository-1.0/Pango-1.0.typelib
+/usr/lib64/girepository-1.0/PangoCairo-1.0.typelib
+/usr/lib64/girepository-1.0/PangoFT2-1.0.typelib
+/usr/lib64/girepository-1.0/PangoXft-1.0.typelib
+/usr/share/gir-1.0/*.gir
 
 %files dev
 %defattr(-,root,root,-)
@@ -191,10 +213,6 @@ popd
 /usr/include/pango-1.0/pango/pangoft2.h
 /usr/include/pango-1.0/pango/pangoxft-render.h
 /usr/include/pango-1.0/pango/pangoxft.h
-/usr/lib64/girepository-1.0/Pango-1.0.typelib
-/usr/lib64/girepository-1.0/PangoCairo-1.0.typelib
-/usr/lib64/girepository-1.0/PangoFT2-1.0.typelib
-/usr/lib64/girepository-1.0/PangoXft-1.0.typelib
 /usr/lib64/libpango-1.0.so
 /usr/lib64/libpangocairo-1.0.so
 /usr/lib64/libpangoft2-1.0.so
@@ -203,7 +221,6 @@ popd
 /usr/lib64/pkgconfig/pangocairo.pc
 /usr/lib64/pkgconfig/pangoft2.pc
 /usr/lib64/pkgconfig/pangoxft.pc
-/usr/share/gir-1.0/*.gir
 
 %files dev32
 %defattr(-,root,root,-)
