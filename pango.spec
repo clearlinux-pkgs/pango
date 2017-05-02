@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.40.5
-Release  : 35
+Release  : 36
 URL      : https://download.gnome.org/sources/pango/1.40/pango-1.40.5.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.40/pango-1.40.5.tar.xz
 Summary  : Cairo rendering support for Pango
