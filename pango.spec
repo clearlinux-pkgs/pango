@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.40.5
-Release  : 36
+Release  : 37
 URL      : https://download.gnome.org/sources/pango/1.40/pango-1.40.5.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.40/pango-1.40.5.tar.xz
 Summary  : Cairo rendering support for Pango
@@ -17,6 +17,7 @@ Requires: pango-doc
 BuildRequires : clear-font
 BuildRequires : docbook-xml
 BuildRequires : font-bitstream-type1
+BuildRequires : fribidi-dev
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
 BuildRequires : gcc-libstdc++32
@@ -36,6 +37,7 @@ BuildRequires : pkgconfig(32cairo)
 BuildRequires : pkgconfig(32fontconfig)
 BuildRequires : pkgconfig(32freetype2)
 BuildRequires : pkgconfig(32harfbuzz)
+BuildRequires : pkgconfig(32libthai)
 BuildRequires : pkgconfig(32xft)
 BuildRequires : pkgconfig(cairo)
 BuildRequires : pkgconfig(cairo-ft)
@@ -44,6 +46,7 @@ BuildRequires : pkgconfig(cairo-xlib)
 BuildRequires : pkgconfig(fontconfig)
 BuildRequires : pkgconfig(freetype2)
 BuildRequires : pkgconfig(harfbuzz)
+BuildRequires : pkgconfig(libthai)
 BuildRequires : pkgconfig(xft)
 
 %description
@@ -127,8 +130,11 @@ cp -a pango-1.40.5 build32
 popd
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1491759426
+export SOURCE_DATE_EPOCH=1494256623
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
@@ -145,7 +151,7 @@ export LDFLAGS="$LDFLAGS -m32"
 make V=1  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1491759426
+export SOURCE_DATE_EPOCH=1494256623
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32

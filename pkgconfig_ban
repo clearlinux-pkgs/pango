@@ -6,12 +6,10 @@ cairo-win32
 cairo-quartz-font
 cairo-pdf
 cairo-ps
-libthai
 32cairo-win32
 32cairo-quartz-font
 32cairo-pdf
 32cairo-ps
-32libthai
 32cairo-ft
 32cairo-xlib
 32cairo-png
