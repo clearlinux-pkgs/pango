@@ -1,3 +1,226 @@
+commit 7a8744e17fdb8ebb975301813665736667900634
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Mon Jul 17 22:17:42 2017 -0400
+
+    1.40.7
+
+ NEWS         | 7 +++++++
+ configure.ac | 2 +-
+ meson.build  | 2 +-
+ 3 files changed, 9 insertions(+), 2 deletions(-)
+
+commit f0684a557faf56c2628bfc521d0128f185b05a96
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Fri Jun 30 13:55:27 2017 -0400
+
+    Drop an questionable G_UNLIKELY
+
+    Owen and I agreed that this doesn't look right.
+
+ pango/pango-renderer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit b17fe9b7d77fa2dd073821101fc3d10c8a13b02b
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Fri Jun 30 13:44:30 2017 -0400
+
+    Don't throw away text prematurely
+
+    When calling into cairo to render glyphs, we want
+    to use show_text_glyphs and pass the text along,
+    if the surface supports that operation. But here,
+    we throw the text away prematurely and end up
+    always end passing no text or clusters down to
+    cairo.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=784394
+
+ pango/pango-renderer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit b225c305e8a75e2ffff44fefa05bd67d0aea1e7e
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Fri Jun 30 06:02:51 2017 -0400
+
+    trivial: fix a typo
+
+    s/bytess/bytes/ in a warning.
+
+ pango/pangocairo-render.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 148a5af3f66b504d3d36df3c6c45f218250a8a0a
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Wed May 31 12:20:27 2017 +0100
+
+    Ignore undefined macros when importing freetype / 2
+
+    Missing inclusions of freetype via Cairo.
+
+ pango/pangocairo-fcfont.c    | 4 ++++
+ pango/pangocairo-fcfontmap.c | 5 +++++
+ 2 files changed, 9 insertions(+)
+
+commit 0b86506c7c19e3ef0c6581dfbc04aec769af57c3
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Wed May 31 11:54:43 2017 +0100
+
+    Ignore undefined macros when importing freetype
+
+    Recently, freetype added checks for various options and forgot
+    to check
+    all combinations. This breaks building projects including freetype.h
+    and using -Werror=undef.
+
+ pango/Makefile.am    |  1 +
+ pango/meson.build    |  1 +
+ pango/pangofc-font.h | 11 +++++++++++
+ 3 files changed, 13 insertions(+)
+
+commit c6d6cfff40ba2e80c2fda7d33d2942a0b4a2d14a
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Tue May 23 22:14:36 2017 -0700
+
+    [break-thai] Fix two bugs in libthai glue layer
+
+    First bug is, we were passing as count to th_brk, the UTF-8
+    length instead of TIS length.  Ouch!  I'm not sure how this
+    was never caught...
+
+    The other one was, break-thai was possibly marking a position
+    is_line_break when break.c has already set it to is_char_break=FALSE.
+    This broke the invariant that if a position is line-break, then it
+    must be char-break as well.  This, in turn was hitting assertions
+    in certain conditions.  Hit it with this for example:
+
+    $ ./pango-view --text 'ส์" (S' --width 43 --font 156px
+
+    Note that in a correct world the Latin part of that string should
+    not reach break-thai.c at all, but that's not how pango-layout.c
+    breaks right now.  See comment before pango_break() call in
+    pango-layout.c.
+
+ pango/break-thai.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+commit 92cc73c898e4665fd739704417d487d137dd271b
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue May 23 10:27:33 2017 +0100
+
+    Unmark private symbols as exported
+
+    Commit ce097c062ea079bf7888d2b2f1f7b17d34f976b6 was a bit too eager to
+    mark symbols as public, and marked some internal functions as
+    exported.
+
+    If a symbol has an underscore prefix it generally means it's not meant
+    to be public.
+
+ pango/pangocairo-fc.h         | 2 --
+ pango/pangocoretext-private.h | 1 -
+ 2 files changed, 3 deletions(-)
+
+commit 3ae68c497e8f9cab6a36b8546e16b111a20289ad
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue May 23 10:22:37 2017 +0100
+
+    meson: Remove the pango enums type from the sub-libraries
+
+    Sub-libraries need to be built after pango-enum-types.h has been
+    generated; we already have a transitive dependency on the header
+    through libpango_dep, so we do not need to add the header to the
+    list of sources.
+
+    This avoids symbols leaking in the sub-libraries.
+
+ pango/meson.build | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 5b4c0ee757f8da3de3abcfc92cb9684a60cad16a
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Mon May 22 21:00:40 2017 -0700
+
+    Don't change fonts for variation selectors
+
+    Fixes https://bugzilla.gnome.org/show_bug.cgi?id=781123
+    Patch from Takao Fujiwara.
+
+ pango/pango-context.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+commit 6f59d0f387dd62f12a7107e898064c7e42159945
+Author: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+Date:   Mon May 22 21:53:30 2017 +0200
+
+    meson: Generate correct sonames
+
+    "soversion:" is for the version placed in the soname. The full library
+    revision goes into "version:". This affects the symlinks, too.
+
+ meson.build       | 3 ++-
+ pango/meson.build | 5 +++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+commit 58442456e6736fbe0d46d55bf32acba881aad853
+Author: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+Date:   Mon May 22 21:52:26 2017 +0200
+
+    meson: Use only spaces for indent
+
+    This was an inconsistent mix of tabs and spaces.
+
+ pango/meson.build | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+commit 6b6d6f0afa7d1b3bdca2e72c2b77b01c00f0e543
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon May 22 20:40:17 2017 +0100
+
+    meson: Ensure we generate the appropriate pkg-config files
+
+    The Pango pkg-config files are generated depending on the platform we
+    are building for, and backends we are using. Only the `pango.pc`
+    file is
+    generated unconditionally.
+
+ meson.build | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
+
+commit 1af14211d06f5799384126326243c90f3624e1bf
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon May 22 20:31:45 2017 +0100
+
+    Use the appropriate symbols for the version string
+
+    We need to use the `@...@` pattern so that Meson can replace the
+    symbols.
+
+ pango/pango-features.h.meson | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit fc65558b47bbdd6719b1ddbbf404eb12116882e3
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon May 22 20:25:37 2017 +0100
+
+    build: Drop the 'lib' prefix from shared libraries
+
+    Meson adds it by itself, where appropriate.
+
+ pango/meson.build | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit dd0ead6058701473785d0e7a2da11abf8df45ff3
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon May 22 14:27:24 2017 +0100
+
+    build: Add Meson files to the Autotools dist
+
+    This way, we can use Meson to build a release tarball generated by
+    Autotools.
+
+ Makefile.am | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
 commit a39e6470e8fb80c713d515ef51729ebdc382f7fd
 Author: Matthias Clasen <mclasen@redhat.com>
 Date:   Mon May 22 14:28:31 2017 -0400
