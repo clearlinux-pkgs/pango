@@ -1,3 +1,254 @@
+commit 0940ddc24f7301f09d945ec44360699ce30859c6
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Mon Aug 7 12:30:48 2017 -0400
+
+    1.40.8
+
+ NEWS         | 5 +++++
+ configure.ac | 2 +-
+ meson.build  | 2 +-
+ 3 files changed, 7 insertions(+), 2 deletions(-)
+
+commit 29eef6e5615fedf4248991ae8dd40838dd03a61b
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Sun Aug 6 14:48:32 2017 -0400
+
+    Add some Emoji presentation sequences
+
+    I had some issue with these, so add an example here.
+
+ pango-view/EMOJI-MODIFIERS.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit f20d215c9110fa8681bc983b3262a2ad34b40417
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Tue Aug 1 04:38:37 2017 +0100
+
+    Add more emoji sequences
+
+ pango-view/EMOJI-MODIFIERS.txt | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+commit d810602845f295469635be8c5987560ea5b78ec1
+Author: Alberts Muktupāvels <alberts.muktupavels@gmail.com>
+Date:   Tue Aug 1 09:55:55 2017 +0300
+
+    fix build with meson
+
+ pango/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit fe0669798d617406b52a638fb2525b1f7527a2d6
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Mon Jul 31 23:03:30 2017 +0100
+
+    Choose emoji font for color emoji
+
+    Fixes https://bugzilla.gnome.org/show_bug.cgi?id=785566
+
+ pango/pango-context.c | 45 +++++++++++++++++++++++++++++++++++++++++----
+ pango/pango-emoji.c   | 16 +++++++++-------
+ 2 files changed, 50 insertions(+), 11 deletions(-)
+
+commit f39ad9bab1f327062958b2750bf1f5609a9ee991
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Mon Jul 31 21:45:16 2017 +0100
+
+    Add data files and routines for emoji itemization
+
+    Ported from Chromium.
+
+    Not hooked yet.
+
+ pango/Makefile.am           |   3 +
+ pango/pango-emoji-private.h |  49 ++++++
+ pango/pango-emoji-table.h   | 403
+ ++++++++++++++++++++++++++++++++++++++++++++
+ pango/pango-emoji.c         | 266 +++++++++++++++++++++++++++++
+ tools/Makefile.am           |   1 +
+ tools/gen-emoji-table.py    |  64 +++++++
+ 6 files changed, 786 insertions(+)
+
+commit 284d357e3d6e29c1437ca18bab347c1af8330908
+Author: Peng Wu <alexepico@gmail.com>
+Date:   Wed Jul 5 15:05:16 2017 +0800
+
+    Update pango_default_break function for Sentence Boundary
+
+    Re-write the code for Sentence Boundary,
+    and use the code style like Grapheme Boundary and Word Boundary.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=782813
+
+ pango/break.c | 748
+ ++++++++++++++++++++++++----------------------------------
+ 1 file changed, 305 insertions(+), 443 deletions(-)
+
+commit 238ac31bd8cc1ef32f18317328381155093ded07
+Author: Peng Wu <alexepico@gmail.com>
+Date:   Thu Jun 15 15:35:35 2017 +0800
+
+    Update pango_default_break function for Word Boundary
+
+    Improve Word Boundary Rule for Hebrew_Letter, Single_Quote,
+    Double_Quote and Regional Indicator.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=782813
+
+ pango/break.c | 75
+ ++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 59 insertions(+), 16 deletions(-)
+
+commit 93474c366309feec2c562637711c8b2f0dd27790
+Author: Peng Wu <alexepico@gmail.com>
+Date:   Fri May 19 09:52:11 2017 +0800
+
+    Update pango_default_break function for Emoji ZWJ sequence
+
+    Support Grapheme Boundaries Rule GB10, GB11, GB12 and GB13.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=782813
+
+ pango/break.c | 117
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 116 insertions(+), 1 deletion(-)
+
+commit 59ccc00de377aa74ca11f191d9dc9fabfb808507
+Author: Peng Wu <alexepico@gmail.com>
+Date:   Mon May 22 11:18:21 2017 +0800
+
+    Update GraphemeBreakTest.txt to Unicode 9.0.0
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=782813
+
+ tests/GraphemeBreakTest.txt | 508
+ +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 498 insertions(+), 10 deletions(-)
+
+commit 872fa3db34e6aacb898b7018276a941f8312811a
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Mon Jul 31 18:04:52 2017 +0100
+
+    Add some emoji break test cases
+
+    These are the same testcases from the previous commit.
+
+ tests/EmojiBreakTest.txt   |  3 +++
+ tests/testboundaries_ucd.c | 17 +++++++++++++++++
+ 2 files changed, 20 insertions(+)
+
+commit 5a8c7b22fe7f3eb6b980e9cd9e569694f59edb41
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Mon Jul 31 18:03:44 2017 +0100
+
+    Revert "some test cases"
+
+    This reverts commit 77b56b4248816c5331ba344f19c45865c8bf2a32.
+
+    This file is a copy of a file in the ucd, we should not change
+    it. Lets add a new test instead.
+
+ tests/GraphemeBreakTest.txt | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+commit 77b56b4248816c5331ba344f19c45865c8bf2a32
+Author: Peng Wu <alexepico@gmail.com>
+Date:   Wed May 3 11:07:10 2017 +0800
+
+    some test cases
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=780669
+
+ tests/GraphemeBreakTest.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit 734e442a30dc6f2e1c90c278d4bd1bcfcaf72f7c
+Author: Peng Wu <alexepico@gmail.com>
+Date:   Wed Apr 5 15:12:50 2017 +0800
+
+    pango: Support emoji sequence in Unicode
+
+    Checked several emoji sequences, the sequence pattern is
+    like follows:
+    1. Use zero width joiner to combine two characters with
+    any width
+    2. Ignore the width of variation selector, tag and emoji modifier
+    for the purposes of finding a run or uniform-width characters.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=780669
+
+ pango/pango-context.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+commit 3d763a2b6455f7ad7cd39a099a6995329b38d4e7
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Sat Jul 29 18:17:56 2017 +0100
+
+    Fix a typo in the emoji test file
+
+ pango-view/EMOJI-MODIFIERS.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 4a34f34dff2493794a71fae4463976f384fb743b
+Author: userwithuid <userwithuid@gmail.com>
+Date:   Sun Jul 23 02:06:00 2017 +0000
+
+    Fix typo in meson build support
+
+    The keyword is called symbol_prefix, not symbols_prefix.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=785296
+
+ pango/meson.build | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit ffba476c2137c228c2574958d51c728d8a2d030c
+Author: Ting-Wei Lan <lantw@src.gnome.org>
+Date:   Mon Jun 5 21:32:42 2017 +0800
+
+    meson: Specify version when defining _POSIX_C_SOURCE
+
+    FreeBSD libc assumes defining _POSIX_C_SOURCE without specifying a
+    version means a pre-C89 environment with the oldest version of POSIX
+    standard, IEEE Std 1003.1-1988, causing several functions used
+    by pango
+    to be undeclared. To resolve this problem, simply provide a version
+    number when defining _POSIX_C_SOURCE.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=783428
+
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 2e107ff2323ba2ede1c864d25e5f34ae054852ba
+Author: Ting-Wei Lan <lantw@src.gnome.org>
+Date:   Mon Jun 5 21:30:08 2017 +0800
+
+    Don't check array for NULL
+
+    Arrays can never be NULL, and doing unnecessary checking causes
+    compilers to show warnings.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=783428
+
+ pango/fonts.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit a3325f632fdb7e993397385bd21c3700d5ec066e
+Author: Ting-Wei Lan <lantw@src.gnome.org>
+Date:   Mon Jun 5 21:25:12 2017 +0800
+
+    Cast enum to int before doing calculation
+
+    It seems that it is possible for compilers to use unsigned interger
+    types to store enum values, so we should cast them to signed interger
+    types before doing calculation to avoid getting unexpected results.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=783428
+
+ pango/fonts.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
 commit 7a8744e17fdb8ebb975301813665736667900634
 Author: Matthias Clasen <mclasen@redhat.com>
 Date:   Mon Jul 17 22:17:42 2017 -0400
