@@ -1,3 +1,88 @@
+commit 49b9a1bf3ad4e5c8cf2b77fdb6bc4125784a30de
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Aug 8 23:43:22 2017 +0100
+
+    Release Pango 1.40.9
+
+    Changes from 1.40.8:
+
+      - Build and dist fixes
+      - Fix build on Windows with MSVC (#783274)
+
+ NEWS         | 5 +++++
+ configure.ac | 2 +-
+ meson.build  | 2 +-
+ 3 files changed, 7 insertions(+), 2 deletions(-)
+
+commit 66dc913ab86a433e0c82a5aa397fa381c52e1a91
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Wed Aug 9 00:02:15 2017 +0100
+
+    docs: Use Markdown instead of Docbook
+
+    The example code is not correctly escaped, and gtk-doc has become
+    slightly more strict. This is a good chance to port this bit of
+    the API
+    reference to Markdown, and avoid all issues in a future without
+    inlined
+    XML.
+
+ pango/pangocairo-render.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+commit 24a9e44b10d64ac82e7c049b3948ab20fe5d5480
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Aug 8 23:36:09 2017 +0100
+
+    tests: Dist missing layout test files
+
+    We're disting only a subset of files with Autotools, but Meson expects
+    everything we have in Git.
+
+ tests/Makefile.am | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 2c8472f97b615927cf2e87812af6afb272116fb5
+Author: Michael Catanzaro <mcatanzaro@igalia.com>
+Date:   Tue Aug 8 16:07:25 2017 -0500
+
+    Dist pango-features.h.meson
+
+ Makefile.am | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit bcbe5c9f221f2864c8cd14f16558f3d8fe1d4fd7
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Aug 4 17:41:33 2017 +0800
+
+    meson: Clean up things a bit on Visual Studio
+
+    We can just force-include msvc_recommended_pragmas.h, which will
+    silence the unwanted noise and point out to us potential problems
+    in the
+    code.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=783274
+
+ meson.build | 21 ++-------------------
+ 1 file changed, 2 insertions(+), 19 deletions(-)
+
+commit 9b11f357f9f968849c70044eaac5d43713436c94
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Wed May 31 17:28:37 2017 +0800
+
+    tests: Don't include unistd.h unconditionally
+
+    Don't include unistd.h on Windows, and include io.h if necessary,
+    as Windows compilers may not ship with it.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=783274
+
+ tests/test-common.c    | 8 +++++++-
+ tests/test-layout.c    | 5 ++++-
+ tests/testboundaries.c | 5 ++++-
+ 3 files changed, 15 insertions(+), 3 deletions(-)
+
 commit 0940ddc24f7301f09d945ec44360699ce30859c6
 Author: Matthias Clasen <mclasen@redhat.com>
 Date:   Mon Aug 7 12:30:48 2017 -0400
