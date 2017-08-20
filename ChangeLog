@@ -1,3 +1,230 @@
+commit 6c4e0c59ace08547b891f102da1ac0364eeda72d
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Sat Aug 19 09:28:11 2017 -0400
+
+    1.40.11
+
+ NEWS         | 6 ++++++
+ configure.ac | 2 +-
+ meson.build  | 2 +-
+ 3 files changed, 8 insertions(+), 2 deletions(-)
+
+commit 7c5b158ce47ffef5be88694a3d12f3b38a784318
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Thu Aug 17 00:01:41 2017 -0400
+
+    Fix backspacing for more Emoji sequences
+
+    Behdad pointed out that I didn't get it right for
+    flags and for sequences ending in a skin tone modifier.
+
+    Fix that.
+
+ pango/break.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit da4cea5b1d8e0448c478c3fe8e47f84eb9e8b6f7
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Wed Aug 16 18:26:00 2017 -0700
+
+    [test] Reduce test-pangocairo-thread work by 8x
+
+    Fixes https://bugzilla.gnome.org/show_bug.cgi?id=786379
+
+ tests/test-pangocairo-threads.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit fe68dd173cc34c160b2f6451aa93682163813eba
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Tue Aug 15 19:47:57 2017 -0400
+
+    1.40.10
+
+ NEWS         | 7 +++++++
+ configure.ac | 2 +-
+ meson.build  | 2 +-
+ 3 files changed, 9 insertions(+), 2 deletions(-)
+
+commit 0328707ed085cc15b381ad6e8700aa630f20f5a6
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Tue Aug 15 19:40:45 2017 -0400
+
+    Fix backspace-deletes-character for Emoji
+
+    We want to delete the entire cluster if it is an Emoji.
+    To do so, look at prev_GB_type to find Emoji.
+
+    This fixes backspacing for sequences like
+    "man health worker" or "family: man, woman, boy, girl".
+
+ pango/break.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+commit 287d6ecd5f1a8683e2163bcde4bf36815082534f
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Tue Aug 15 19:11:29 2017 -0400
+
+    break: Stop lumping ZWJ with Extend
+
+    ZWJ is treated as its own class in TR29, and us lumping
+    them together and then manually checking wc == 0x200d in
+    various places was causing us to inadvertedly inserting
+    grapheme breaks in the middle of Emoji ZWJ sequences
+    where they are not suppose to be.
+
+    Add test cases to verify this.
+
+ pango/break.c            | 37 ++++++++++++++++++++++++++-----------
+ tests/EmojiBreakTest.txt | 11 ++++++++---
+ 2 files changed, 34 insertions(+), 14 deletions(-)
+
+commit 8e9d5884c32cebe2c26019ba914d7ce02368d0c4
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Tue Aug 15 18:41:10 2017 -0400
+
+    break.c: Fix indentation a bit
+
+    Messed up whitespace makes this unwieldy function
+    even harder to read.
+
+ pango/break.c | 193
+ +++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 96 insertions(+), 97 deletions(-)
+
+commit 8ab2cc198469b4a46b1536c4f5c5d3396a6444b4
+Author: John Ralls <jralls@ceridwen.us>
+Date:   Tue Aug 15 09:21:26 2017 +0200
+
+    CoreText: Remove absolute size and scaling to screen resolution.
+
+    Cairo's CGFont backend already handles scaling fonts to the display
+    resolution, so scaling to the screen screen resolution in Pango's
+    CoreText backend generates double-sized text on a Retina display.
+
+    The layout test depended on providing a (bogus) resolution of
+    96DPI and
+    scaling the font to it in order to obtain the "expected" layout
+    results. This is replaced by adjusting the font size in test-layout.c
+    if Pango is compiled for CoreText.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=782393
+
+ pango/pangocairo-coretextfont.c    | 22 ++----------
+ pango/pangocairo-coretextfontmap.c |  2 +-
+ pango/pangocoretext-fontmap.c      | 69
+ ++++++++++++++------------------------
+ pango/pangocoretext-private.h      |  2 +-
+ pango/pangocoretext.c              |  4 +++
+ tests/test-layout.c                | 11 +++++-
+ 6 files changed, 44 insertions(+), 66 deletions(-)
+
+commit 599ffcf042bbca6f87edff0e241958523145294d
+Author: Philip Withnall <withnall@endlessm.com>
+Date:   Sat Aug 12 10:25:26 2017 +0100
+
+    mini-fribidi: Squash -Werror=undef failures due to use of #if
+
+    The FriBiDi code uses #if rather than #ifdef, which pedantic compilers
+    warn about if the macro is undefined. The new Meson build sets
+    -Werror=undef, promoting these warnings to failures, and making CI
+    systems using certain compiler versions (in this case, Debian Jessie)
+    sad.
+
+    Signed-off-by: Philip Withnall <withnall@endlessm.com>
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=786192
+
+ pango/mini-fribidi/fribidi_config.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+commit 5a0cc9f7f2e8e2e971e973caeeeb5aec59d68f59
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Sat Aug 12 18:38:51 2017 -0400
+
+    Support variation selectors for shaping
+
+    This is necessary to make some emoji sequences shape
+    and render correctly.
+
+ pango/pangofc-shape.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
+
+commit 333dc12d1e538bceb059514a6236cadda23a6354
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Fri Aug 11 18:37:17 2017 -0700
+
+    Bug 784243 - Pango gravity is not applied on markup with multiple
+    spans.
+
+    Patch from Harioum Pratap Singh.
+
+ pango/pango-context.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+commit b34be4f4cd77d86fbeaa9992a6bdc2cd4278038f
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Fri Aug 11 10:55:31 2017 -0700
+
+    Update emoji data to version 5
+
+ pango/pango-emoji-table.h | 52
+ ++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 42 insertions(+), 10 deletions(-)
+
+commit f0cb1dde12ab12411da2feb54025cf1fab306a68
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Thu Aug 10 19:50:16 2017 -0700
+
+    Simplify hb_buffer_set_flags()
+
+    From a 2014 HarfBuzz commit:
+
+    commit 763e5466c0a03a7c27020e1e2598e488612529a7
+    Author: Behdad Esfahbod <behdad@behdad.org>
+    Date:   Sat Aug 2 16:17:44 2014 -0400
+
+        Make it easier to use HB_BUFFER_FLAG_BOT/EOT
+
+        Previously, we expected users to provide BOT/EOT flags when the
+        text *segment* was at paragraph boundaries.  This meant that for
+        clients that provide full paragraph to HarfBuzz (eg. Pango), they
+        had code like this:
+
+          hb_buffer_set_flags (hb_buffer,
+                               (item_offset == 0 ? HB_BUFFER_FLAG_BOT :
+                               0) |
+                               (item_offset + item_length ==
+                               paragraph_length ?
+                                HB_BUFFER_FLAG_EOT : 0));
+
+          hb_buffer_add_utf8 (hb_buffer,
+                              paragraph_text, paragraph_length,
+                              item_offset, item_length);
+
+        After this change such clients can simply say:
+
+          hb_buffer_set_flags (hb_buffer,
+                               HB_BUFFER_FLAG_BOT | HB_BUFFER_FLAG_EOT);
+
+          hb_buffer_add_utf8 (hb_buffer,
+                              paragraph_text, paragraph_length,
+                              item_offset, item_length);
+
+        Ie, HarfBuzz itself checks whether the segment is at the
+        beginning/end
+        of the paragraph.  Clients that only pass item-at-a-time to
+        HarfBuzz
+        continue not setting any flags whatsoever.
+
+        Another way to put it is: if there's pre-context text in the
+        buffer,
+        HarfBuzz ignores the BOT flag.  If there's post-context,
+        it ignores
+        EOT flag.
+
+ pango/pangofc-shape.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
 commit 49b9a1bf3ad4e5c8cf2b77fdb6bc4125784a30de
 Author: Emmanuele Bassi <ebassi@gnome.org>
 Date:   Tue Aug 8 23:43:22 2017 +0100
