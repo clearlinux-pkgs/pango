@@ -1,3 +1,99 @@
+commit fd429398a64bc2d7a01da64efa736bbb6eec6a29
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Mon Sep 4 10:51:29 2017 -0400
+
+    1.40.12
+
+ NEWS         | 5 +++++
+ configure.ac | 2 +-
+ meson.build  | 2 +-
+ 3 files changed, 7 insertions(+), 2 deletions(-)
+
+commit 9e16ddd446f19cd4c9cf18736b860d4c40248000
+Author: Akira TAGOH <akira@tagoh.org>
+Date:   Tue Aug 29 19:55:51 2017 +0900
+
+    Fix multilib issue in pango-enum-types.h.template
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=786887
+
+ pango/pango-enum-types.h.template | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 33c10cb0c40503630146e4d32de807728d99ab0c
+Author: Peng Wu <alexepico@gmail.com>
+Date:   Wed Aug 16 15:02:36 2017 +0800
+
+    Fix pango_default_break function for sentence start/end
+
+    Skip the space characters in sentence start/end.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=785978
+
+ pango/break.c | 39 +++++++++++++++++++++++++++++----------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
+
+commit 1377d3cf8219cf41e3bacd2eaa848a92009eaa1f
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Aug 25 18:22:23 2017 +0800
+
+    build: Update MSVC build docs for introspection
+
+    Let people know about the situation where one is able to build the
+    introspection files directly from within the Visual Studio projects.
+
+ win32/vs10/README.txt | 16 ++++++++++++++++
+ win32/vs9/README.txt  | 16 ++++++++++++++++
+ 2 files changed, 32 insertions(+)
+
+commit 346c60ba0e13aeb5baf2d8e24ff121cb8d2ee64e
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Aug 25 15:08:29 2017 +0800
+
+    build: Integrate introspection build in MSVC projects
+
+    This adds the introspection NMake Makefiles buildable from within the
+    Visual Studio projects, so that the whole Visual Studio build process
+    would be simplified.  At its current state, this will build the
+    introspection files for PangoCairo and Pango, but does not include
+    PangoFT2 support, so this is not supported in the [Release|Debug]_FC
+    configs.  For this to work, one needs to have a complete installation
+    of
+    GObject-introspection in $(GlibEtcInstallRoot), and will need
+    to ensure
+    that PythonDir (or PythonDirX64 on x64 systems) corresponds to the
+    same Python series that was used to build GObject-Introspection.
+
+    This needs to be built (and cleaned) separately as this is not
+    built by
+    default, by building/cleaning the pango-introspect project directly.
+
+    In this commit, also rename the PythonPath entries in the projects and
+    property sheets, so that we avoid getting confused with the PYTHONPATH
+    envvar; and for Visual Studio 201x builds, we use Python 3.4.x by
+    default 2010, 2012 and 2013, and 3.6.x by default for 2015 and
+    2017, as
+    what is done now in GObject-Introspection projects.
+
+ win32/vs10/Makefile.am                   |   1 +
+ win32/vs10/pango-build-defines.props     |  10 +++
+ win32/vs10/pango-install.propsin         |   4 +-
+ win32/vs10/pango-introspect.vcxproj      | 103
+ +++++++++++++++++++++++++++++++
+ win32/vs10/pango-version-paths.props.in  |  24 +++++--
+ win32/vs10/pango.sln                     |   6 ++
+ win32/vs11/Makefile.am                   |   1 +
+ win32/vs12/Makefile.am                   |   1 +
+ win32/vs14/Makefile.am                   |   1 +
+ win32/vs15/Makefile.am                   |   1 +
+ win32/vs9/Makefile.am                    |   1 +
+ win32/vs9/pango-build-defines.vsprops    |   8 +++
+ win32/vs9/pango-install.vspropsin        |   4 +-
+ win32/vs9/pango-introspect.vcproj        |  76 +++++++++++++++++++++++
+ win32/vs9/pango-version-paths.vsprops.in |  14 ++++-
+ win32/vs9/pango.sln                      |   9 +++
+ 16 files changed, 251 insertions(+), 13 deletions(-)
+
 commit 6c4e0c59ace08547b891f102da1ac0364eeda72d
 Author: Matthias Clasen <mclasen@redhat.com>
 Date:   Sat Aug 19 09:28:11 2017 -0400
