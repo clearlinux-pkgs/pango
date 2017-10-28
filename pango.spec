@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.40.13
-Release  : 45
+Release  : 46
 URL      : https://download.gnome.org/sources/pango/1.40/pango-1.40.13.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.40/pango-1.40.13.tar.xz
 Summary  : Internationalized text handling
