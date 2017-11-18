@@ -1,3 +1,55 @@
+commit cd26b69cf0d45e30cb8c08ca5aa32ed0c83e6605
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Wed Nov 15 22:20:32 2017 -0500
+
+    1.40.14
+
+ NEWS         | 5 +++++
+ configure.ac | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+commit 46a6496b9ea849a20c98e79f9a56bcab609dd8f9
+Author: Peng Wu <alexepico@gmail.com>
+Date:   Tue Nov 7 13:56:59 2017 +0800
+
+    Drop fixup_broken_linebreaktest variable
+
+    The fixup_broken_linebreaktest variable is not needed any more.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=789625
+
+ tests/testboundaries_ucd.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
+
+commit e6f63d744787d473083adbe9f6c0d0e91d47a121
+Author: Peng Wu <alexepico@gmail.com>
+Date:   Fri Nov 3 16:12:54 2017 +0800
+
+    Add char break test cases
+
+    Add char break test cases for the is_char_break variable,
+    and fixup_broken_linebreaktest is not used any more.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=789625
+
+ tests/CharBreakTest.txt    | 11 +++++++++++
+ tests/EmojiBreakTest.txt   |  3 +++
+ tests/testboundaries_ucd.c | 19 ++++++++++++++++++-
+ 3 files changed, 32 insertions(+), 1 deletion(-)
+
+commit e8316c1c6f46b844b265478622d3a581305b70b6
+Author: Peng Wu <alexepico@gmail.com>
+Date:   Tue Oct 31 13:07:02 2017 +0800
+
+    Fix is_char_break issue in pango_default_break function
+
+    For most cases, the is_char_break variable should be TRUE.
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=789625
+
+ pango/break.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
 commit 377b6e7e853a05715e1a53f0739042eb23418da7
 Author: Matthias Clasen <mclasen@redhat.com>
 Date:   Fri Oct 27 17:56:17 2017 -0400
