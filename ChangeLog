@@ -1,3 +1,317 @@
+commit 4120b76eed6daeec38d844ecf819977899f4edd7
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Mon Jan 8 22:01:17 2018 -0500
+
+    1.41.0
+
+ NEWS | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit 3ccf578a2d39350d19af12bceaf700cb6b178436
+Author: Christian Hergert <chergert@redhat.com>
+Date:   Thu Jan 4 23:11:44 2018 -0800
+
+    fontmap: fix warnings from recent g_object_ref() changes
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=792231
+
+ pango/pangofc-fontmap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 694cb9ee0af00c38e036bf693d01ae9739e68f2b
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Thu Jan 4 23:14:21 2018 -0500
+
+    Avoid a memory leak
+
+    We call pango_fc_font_key_init on a stack-allocated temporary
+    lookup key, with the expectation that it does not have to be
+    freed. In the case where we want to use it as key in the font_hash,
+    we call copy() on it. So, don't duplicate the variations string
+    in init() - it will get duplicated in copy() later.
+
+ pango/pangofc-fontmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 6193498961cd334086c3d665d1d856454e16d1b4
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Thu Jan 4 16:09:58 2018 +0000
+
+    Remove unneeded var
+
+ meson.build | 3 ---
+ 1 file changed, 3 deletions(-)
+
+commit cc994f939192f4f357a49150164b33023cb920f1
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Wed Jan 3 12:57:35 2018 -0500
+
+    meson: Bump the fontconfig requirements
+
+    Keep the autotools and meson builds in sync, as far
+    as requirements are concerned.
+
+ meson.build | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit fc80a21b8df7e716e1d6d2194701ebc07681e57d
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Wed Jan 3 12:57:19 2018 -0500
+
+    Bump version to 1.41
+
+    We've added new API for font variations.
+
+ configure.ac | 4 ++--
+ meson.build  | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+commit 5f00e066caac10fa724ca90e430b7f7d286e42ed
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Wed Jan 3 16:24:31 2018 +0000
+
+    [fc] Use FcWeightFrom/ToOpenTypeDouble() if available
+
+ configure.ac            |  4 +--
+ pango/pangofc-fontmap.c | 71
+ +++++++++----------------------------------------
+ 2 files changed, 15 insertions(+), 60 deletions(-)
+
+commit b97089825723294cb6d4cc75c6e100c195b84369
+Merge: 4a90fcce cb84dd0d
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Wed Jan 3 14:10:44 2018 +0000
+
+    Merge branch 'font-variations'
+
+commit cb84dd0d9c65725247304263a28b1876a4eeafe8
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Tue Dec 19 09:44:44 2017 -0500
+
+    Make variations test more generic
+
+    Specify just the axis part in the attribute, so this test
+    can be used with any font supporting font variations.
+
+ pango-view/test-font-variations.markup | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+commit e4e30535e3ed5c8e33b2134d5a640166f6e3525b
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Tue Dec 19 00:36:43 2017 -0500
+
+    [cairo] Don't set font variations on cairo_font_options_t
+
+    We pass them in through FcPattern to the cairo_face already, no need
+    to pass here again.
+
+    Yeah, I know... /tears
+
+ pango/pangocairo-fcfont.c | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+commit 905ccc5bfd4a1c4d11abb39e8b495cc8a966436a
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Tue Dec 19 00:01:54 2017 -0500
+
+    [fc] Only set variations if non-empty
+
+ pango/pangofc-fontmap.c | 4 +++-
+ pango/pangofc-fontmap.h | 4 ++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+commit 6a9c066a94ba26a4996990595b854486377067d8
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Mon Dec 18 21:21:03 2017 -0500
+
+    [fc] Request variable fonts from fontconfig
+
+ pango/pangofc-fontmap.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 4713461215679eba6ccf3355e8fd04f94b1961aa
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Mon Dec 18 19:01:54 2017 -0500
+
+    Add an out-of-range value
+
+    This tests the clamping of axis values, which freetype
+    is supposed to do. It wasn't working when we tried it.
+
+ pango-view/test-font-variations.markup | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit a78ce2a8c5e2f250abadf14989dcd8777d09112b
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Mon Dec 18 13:05:39 2017 -0500
+
+    pango-view: Add a font-variations example
+
+    This uses markup to demonstrate font variations.
+    It nees the 'Selawik Variations test' font.
+
+ pango-view/test-font-variations.markup | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+commit 3ccb6085580d05bfb0f2dfb77d55eaea1403f45d
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Thu Sep 7 06:35:05 2017 -0400
+
+    Add some tests with variations
+
+ tests/markups/valid-10.expected | 24 ++++++++++++++++++++
+ tests/markups/valid-10.markup   | 11 +++++++++
+ tests/markups/valid-11.expected | 50
+ +++++++++++++++++++++++++++++++++++++++++
+ tests/markups/valid-11.markup   | 11 +++++++++
+ 4 files changed, 96 insertions(+)
+
+commit efa66e7b634050ef395418b544b012a4a5183973
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Tue Sep 5 07:37:31 2017 -0400
+
+    Add initial support for OpenType font variations
+
+    This commit lets PangoFontDescription carry font variation
+    information as a string. Only pangocairo has been updated
+    to make use of this information. We pass it to harfbuzz
+    for shaping, and we pass it to cairo when creating scaled
+    fonts.
+
+ docs/pango-sections.txt   |   3 +
+ pango/fonts.c             | 172
+ +++++++++++++++++++++++++++++++++++++++++++---
+ pango/pango-font.h        |  13 +++-
+ pango/pangocairo-fcfont.c |  17 ++++-
+ pango/pangofc-fontmap.c   |  43 +++++++++++-
+ pango/pangofc-fontmap.h   |  13 ++++
+ pango/pangofc-shape.c     |  45 ++++++++++++
+ 7 files changed, 291 insertions(+), 15 deletions(-)
+
+commit 95c2aaaa9a1f0167e832a3d31700ae51e519fff4
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Thu Sep 7 06:29:12 2017 -0400
+
+    Test attribute iterators
+
+    Add a quick test for iterating through attribute lists
+    that piggy-backs on the markup tests - we already have
+    attribute lists and a place for expected results here.
+
+ tests/markup-parse.c           | 68
+ +++++++++++++++++++++++++++++++++++++++---
+ tests/markups/valid-1.expected |  8 +++++
+ tests/markups/valid-2.expected |  8 +++++
+ tests/markups/valid-3.expected |  6 ++++
+ tests/markups/valid-4.expected | 18 +++++++++++
+ tests/markups/valid-5.expected | 12 ++++++++
+ tests/markups/valid-6.expected | 12 ++++++++
+ tests/markups/valid-7.expected |  8 +++++
+ tests/markups/valid-8.expected | 12 ++++++++
+ tests/markups/valid-9.expected |  6 ++++
+ 10 files changed, 154 insertions(+), 4 deletions(-)
+
+commit 53c483cb115cb33c72ccf320366af3f76716178a
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Tue Sep 5 07:38:25 2017 -0400
+
+    Add some font description tests
+
+    This adds some tests around the new variations field.
+
+ tests/test-font.c | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+commit 4a90fcce32238c3122003355b44b692a629427e2
+Author: Khaled Hosny <khaledhosny@eglug.org>
+Date:   Fri Dec 1 20:49:36 2017 +0200
+
+    Remove declarations for non-existing functions
+
+ pango/pangoft2-private.h | 13 -------------
+ 1 file changed, 13 deletions(-)
+
+commit d1dc7bcbd6b980cf072cba712b00117b337da3e8
+Author: Khaled Hosny <khaledhosny@eglug.org>
+Date:   Fri Dec 1 20:40:43 2017 +0200
+
+    Drop unused _pango_ft2_ft_strerror
+
+    This function is unused since 2004! Last use was dropped in commit
+    2cdd74591a2b885dbc31292d20dabba81d42faf0. Currently it is just causing
+    compiler warnings:
+
+    [40/111] Compiling C object 'pango/pangoft2-1.0@sha/pangoft2.c.o'.
+    /usr/include/freetype2/freetype/fterrdef.h: In function
+    ‘_pango_ft2_ft_strerror’:
+    /usr/include/freetype2/freetype/fterrdef.h:235:17: warning:
+    initializer-string for array of chars is too long
+                     "found FDEF or IDEF opcode in glyf bytecode" )
+                     ^
+    ../pango/pangoft2.c:537:38: note: in definition of macro
+    ‘FT_ERRORDEF’
+     #define FT_ERRORDEF( e, v, s )  { e, s },
+                                          ^
+    /usr/include/freetype2/freetype/fterrdef.h:234:3: note: in expansion
+    of macro ‘FT_ERRORDEF_’
+       FT_ERRORDEF_( DEF_In_Glyf_Bytecode,                        0x9C,
+       ^~~~~~~~~~~~
+    /usr/include/freetype2/freetype/fterrdef.h:235:17: note: (near
+    initialization for ‘ft_errors[75].msg’)
+                     "found FDEF or IDEF opcode in glyf bytecode" )
+                     ^
+    ../pango/pangoft2.c:537:38: note: in definition of macro
+    ‘FT_ERRORDEF’
+     #define FT_ERRORDEF( e, v, s )  { e, s },
+                                          ^
+    /usr/include/freetype2/freetype/fterrdef.h:234:3: note: in expansion
+    of macro ‘FT_ERRORDEF_’
+       FT_ERRORDEF_( DEF_In_Glyf_Bytecode,                        0x9C,
+       ^~~~~~~~~~~~
+
+ pango/pangoft2-private.h |  1 -
+ pango/pangoft2.c         | 45
+ ---------------------------------------------
+ 2 files changed, 46 deletions(-)
+
+commit 5ccfe0cf996f706697744e81e6a5707a6ac4df39
+Author: Ross Burton <ross.burton@intel.com>
+Date:   Wed Nov 29 17:13:58 2017 +0000
+
+    Remove copy of introspection.m4 from acinclude.m4
+
+    The gobject-introspection macros are ubiquitous now, so remove the
+    copy in
+    acinclude.m4.
+
+ acinclude.m4 | 98
+ ------------------------------------------------------------
+ 1 file changed, 98 deletions(-)
+
+commit 3e5769aca2200b9f20614b1b9ec71f1bcf057ffe
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Wed Nov 22 18:50:30 2017 -0800
+
+    [pangocairo] Pick up font-options from cairo_t
+
+    Now one can use cairo_set_font_options(), whereas before they had to
+    use pango_cairo_context_set_font_options().  If the latter is used,
+    it will override the former.
+
+    Fixes https://bugzilla.gnome.org/show_bug.cgi?id=790747
+
+ pango/pangocairo-context.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+commit 0813fcabf5b13b2b90780ec45f3018ad00927da5
+Author: Behdad Esfahbod <behdad@behdad.org>
+Date:   Mon Nov 20 15:27:48 2017 -0800
+
+    Fix test build
+
+ tests/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 commit cd26b69cf0d45e30cb8c08ca5aa32ed0c83e6605
 Author: Matthias Clasen <mclasen@redhat.com>
 Date:   Wed Nov 15 22:20:32 2017 -0500
