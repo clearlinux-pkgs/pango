@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.42.0
-Release  : 50
+Release  : 51
 URL      : https://download.gnome.org/sources/pango/1.42/pango-1.42.0.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.42/pango-1.42.0.tar.xz
 Summary  : Internationalized text handling
@@ -136,13 +136,16 @@ lib32 components for the pango package.
 pushd ..
 cp -a pango-1.42.0 build32
 popd
+pushd ..
+cp -a pango-1.42.0 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1522109265
+export SOURCE_DATE_EPOCH=1522109768
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -161,8 +164,16 @@ export LDFLAGS="$LDFLAGS -m32"
 %configure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
 popd
+unset PKG_CONFIG_PATH
+pushd ../buildavx2/
+export CFLAGS="$CFLAGS -m64 -march=haswell"
+export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
+export LDFLAGS="$LDFLAGS -m64 -march=haswell"
+%configure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft   --libdir=/usr/lib64/haswell --bindir=/usr/bin/haswell
+make  %{?_smp_mflags}
+popd
 %install
-export SOURCE_DATE_EPOCH=1522109265
+export SOURCE_DATE_EPOCH=1522109768
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -173,6 +184,9 @@ for i in *.pc ; do ln -s $i 32$i ; done
 popd
 fi
 popd
+pushd ../buildavx2/
+%make_install
+popd
 %make_install
 
 %files
@@ -181,9 +195,14 @@ popd
 /usr/lib32/girepository-1.0/PangoCairo-1.0.typelib
 /usr/lib32/girepository-1.0/PangoFT2-1.0.typelib
 /usr/lib32/girepository-1.0/PangoXft-1.0.typelib
+/usr/lib64/haswell/girepository-1.0/Pango-1.0.typelib
+/usr/lib64/haswell/girepository-1.0/PangoCairo-1.0.typelib
+/usr/lib64/haswell/girepository-1.0/PangoFT2-1.0.typelib
+/usr/lib64/haswell/girepository-1.0/PangoXft-1.0.typelib
 
 %files bin
 %defattr(-,root,root,-)
+/usr/bin/haswell/pango-view
 /usr/bin/pango-view
 
 %files data
@@ -230,6 +249,10 @@ popd
 /usr/include/pango-1.0/pango/pangoft2.h
 /usr/include/pango-1.0/pango/pangoxft-render.h
 /usr/include/pango-1.0/pango/pangoxft.h
+/usr/lib64/haswell/libpango-1.0.so
+/usr/lib64/haswell/libpangocairo-1.0.so
+/usr/lib64/haswell/libpangoft2-1.0.so
+/usr/lib64/haswell/libpangoxft-1.0.so
 /usr/lib64/libpango-1.0.so
 /usr/lib64/libpangocairo-1.0.so
 /usr/lib64/libpangoft2-1.0.so
@@ -305,6 +328,14 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/haswell/libpango-1.0.so.0
+/usr/lib64/haswell/libpango-1.0.so.0.4200.0
+/usr/lib64/haswell/libpangocairo-1.0.so.0
+/usr/lib64/haswell/libpangocairo-1.0.so.0.4200.0
+/usr/lib64/haswell/libpangoft2-1.0.so.0
+/usr/lib64/haswell/libpangoft2-1.0.so.0.4200.0
+/usr/lib64/haswell/libpangoxft-1.0.so.0
+/usr/lib64/haswell/libpangoxft-1.0.so.0.4200.0
 /usr/lib64/libpango-1.0.so.0
 /usr/lib64/libpango-1.0.so.0.4200.0
 /usr/lib64/libpangocairo-1.0.so.0
