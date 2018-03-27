@@ -12,3 +12,5 @@ libX11-dev32
 libxcb-dev32
 libXrender-dev32
 fribidi-dev
+fribidi-dev32
+glib-dev
