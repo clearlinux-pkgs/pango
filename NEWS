@@ -1,3 +1,8 @@
+Overview of changes in 1.42.3
+=============================
+- Fix handling of font lists on OS X (#252)
+- Fix a memory leak
+
 Overview of changes in 1.42.2
 =============================
 - Require harfbuzz 1.4.2
