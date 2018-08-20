@@ -1,7 +1,7 @@
-Overview of changes in 1.42.3
+Overview of changes in 1.42.4
 =============================
-- Fix handling of font lists on OS X (#252)
-- Fix a memory leak
+- Fix build failures (OS X, C89)
+- Prevent an assertion with invalid Unicode sequences
 
 Overview of changes in 1.42.2
 =============================

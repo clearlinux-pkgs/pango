@@ -1,3 +1,85 @@
+commit a6a89818246b0b14c0fe3d00d6120929fc0a11d9
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Mon Aug 20 10:21:39 2018 -0400
+
+    1.42.4
+
+ NEWS         | 5 +++++
+ configure.ac | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+commit 71aaeaf020340412b8d012fe23a556c0420eda5f
+Author: Matthias Clasen <mclasen@redhat.com>
+Date:   Fri Aug 17 22:29:36 2018 -0400
+
+    Prevent an assertion with invalid Unicode sequences
+
+    Invalid Unicode sequences, such as 0x2665 0xfe0e 0xfe0f,
+    can trick the Emoji iter code into returning an empty
+    segment, which then triggers an assertion in the itemizer.
+
+    Prevent this by ensuring that we make progress.
+
+    This issue was reported by Jeffrey M.
+
+ pango/pango-emoji.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit ccfd3b466ca43b202681ce951600aac8f97d8dc4
+Merge: 0cbae46c 3d04cc2b
+Author: Khaled Hosny <khaledhosny@eglug.org>
+Date:   Sat Aug 4 20:12:22 2018 +0000
+
+    Merge branch 'c89' into 'master'
+
+    Fix build failure in C89 mode
+
+    See merge request GNOME/pango!10
+
+commit 0cbae46ca1d0a1bbf50ddd69553e047118812be5
+Merge: 67471cbf dce7ba63
+Author: Khaled Hosny <khaledhosny@eglug.org>
+Date:   Sat Aug 4 20:11:11 2018 +0000
+
+    Merge branch 'surrogate' into 'master'
+
+    Fix build failure on Mac OS X 10.5 and earlier
+
+    Closes #263
+
+    See merge request GNOME/pango!11
+
+commit dce7ba63ed8b0567f674ade72da827d4a4c1b603
+Author: Ryan Schmidt <git@ryandesign.com>
+Date:   Sat Aug 4 12:20:02 2018 -0500
+
+    Fix build failure on Mac OS X 10.5 and earlier
+
+    Provides definitions of CFStringIsSurrogateHighCharacter,
+    CFStringIsSurrogateLowCharacter and
+    CFStringGetLongCharacterForSurrogatePair.
+
+    Closes #263
+
+ pango/pangocoretext-shape.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+commit 3d04cc2bbdce0a8b561d0e19255309f8d470816e
+Author: Ryan Schmidt <git@ryandesign.com>
+Date:   Sat Aug 4 11:57:31 2018 -0500
+
+    Fix build failure in C89 mode
+
+    Fixes build error with default compilers on Mac OS X 10.6 and earlier:
+
+    pangocoretext-fontmap.c: In function
+    ‘pango_core_text_fontset_new’:
+    pangocoretext-fontmap.c:1563: error: ‘for’ loop initial
+    declaration used outside C99 mode
+
+ pango/pangocoretext-fontmap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
 commit 67471cbfe24cd4418e9e97837ac85207f0d974de
 Author: Matthias Clasen <mclasen@redhat.com>
 Date:   Mon Jul 30 13:32:51 2018 -0400
