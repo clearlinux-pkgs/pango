@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.42.4
-Release  : 59
+Release  : 60
 URL      : https://download.gnome.org/sources/pango/1.42/pango-1.42.4.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.42/pango-1.42.4.tar.xz
 Summary  : Internationalized text handling
@@ -15,7 +15,6 @@ Requires: pango-data
 Requires: pango-lib
 Requires: pango-license
 Requires: pango-man
-BuildRequires : buildreq-gnome
 BuildRequires : buildreq-meson
 BuildRequires : clear-font
 BuildRequires : docbook-xml
@@ -57,6 +56,7 @@ BuildRequires : pkgconfig(harfbuzz)
 BuildRequires : pkgconfig(libthai)
 BuildRequires : pkgconfig(xft)
 BuildRequires : pkgconfig(xrender)
+Patch1: CVE-2018-15120.nopatch
 
 %description
 Pango is a library for layout and rendering of text, with an emphasis
@@ -167,14 +167,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1534780824
+export SOURCE_DATE_EPOCH=1536003423
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft
 make  %{?_smp_mflags}
 
@@ -195,7 +195,7 @@ export LDFLAGS="$LDFLAGS -m64 -march=haswell"
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1534780824
+export SOURCE_DATE_EPOCH=1536003423
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/pango
 cp COPYING %{buildroot}/usr/share/doc/pango/COPYING
