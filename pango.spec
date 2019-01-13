@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.42.4
-Release  : 60
+Release  : 61
 URL      : https://download.gnome.org/sources/pango/1.42/pango-1.42.4.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.42/pango-1.42.4.tar.xz
 Summary  : Internationalized text handling
