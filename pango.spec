@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.42.4
-Release  : 62
+Release  : 63
 URL      : https://download.gnome.org/sources/pango/1.42/pango-1.42.4.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.42/pango-1.42.4.tar.xz
 Summary  : Internationalized text handling
@@ -18,7 +18,7 @@ Requires: pango-man
 BuildRequires : buildreq-meson
 BuildRequires : clear-font
 BuildRequires : docbook-xml
-BuildRequires : font-bitstream-type1
+BuildRequires : xorg-fonts
 BuildRequires : fribidi-dev
 BuildRequires : fribidi-dev32
 BuildRequires : gcc-dev32
