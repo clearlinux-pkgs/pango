@@ -4,21 +4,21 @@
 #
 Name     : pango
 Version  : 1.42.4
-Release  : 63
+Release  : 64
 URL      : https://download.gnome.org/sources/pango/1.42/pango-1.42.4.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.42/pango-1.42.4.tar.xz
 Summary  : Internationalized text handling
 Group    : Development/Tools
 License  : LGPL-2.0
-Requires: pango-bin
-Requires: pango-data
-Requires: pango-lib
-Requires: pango-license
-Requires: pango-man
+Requires: pango-bin = %{version}-%{release}
+Requires: pango-data = %{version}-%{release}
+Requires: pango-lib = %{version}-%{release}
+Requires: pango-license = %{version}-%{release}
+Requires: pango-man = %{version}-%{release}
+BuildRequires : buildreq-gnome
 BuildRequires : buildreq-meson
 BuildRequires : clear-font
 BuildRequires : docbook-xml
-BuildRequires : xorg-fonts
 BuildRequires : fribidi-dev
 BuildRequires : fribidi-dev32
 BuildRequires : gcc-dev32
@@ -56,7 +56,9 @@ BuildRequires : pkgconfig(harfbuzz)
 BuildRequires : pkgconfig(libthai)
 BuildRequires : pkgconfig(xft)
 BuildRequires : pkgconfig(xrender)
+BuildRequires : xorg-fonts
 Patch1: CVE-2018-15120.nopatch
+Patch2: CVE-2019-1010238.patch
 
 %description
 Pango is a library for layout and rendering of text, with an emphasis
@@ -68,9 +70,8 @@ and font handling for GTK+-2.x.
 %package bin
 Summary: bin components for the pango package.
 Group: Binaries
-Requires: pango-data
-Requires: pango-license
-Requires: pango-man
+Requires: pango-data = %{version}-%{release}
+Requires: pango-license = %{version}-%{release}
 
 %description bin
 bin components for the pango package.
@@ -87,10 +88,11 @@ data components for the pango package.
 %package dev
 Summary: dev components for the pango package.
 Group: Development
-Requires: pango-lib
-Requires: pango-bin
-Requires: pango-data
-Provides: pango-devel
+Requires: pango-lib = %{version}-%{release}
+Requires: pango-bin = %{version}-%{release}
+Requires: pango-data = %{version}-%{release}
+Provides: pango-devel = %{version}-%{release}
+Requires: pango = %{version}-%{release}
 
 %description dev
 dev components for the pango package.
@@ -99,10 +101,10 @@ dev components for the pango package.
 %package dev32
 Summary: dev32 components for the pango package.
 Group: Default
-Requires: pango-lib32
-Requires: pango-bin
-Requires: pango-data
-Requires: pango-dev
+Requires: pango-lib32 = %{version}-%{release}
+Requires: pango-bin = %{version}-%{release}
+Requires: pango-data = %{version}-%{release}
+Requires: pango-dev = %{version}-%{release}
 
 %description dev32
 dev32 components for the pango package.
@@ -111,7 +113,7 @@ dev32 components for the pango package.
 %package doc
 Summary: doc components for the pango package.
 Group: Documentation
-Requires: pango-man
+Requires: pango-man = %{version}-%{release}
 
 %description doc
 doc components for the pango package.
@@ -120,8 +122,8 @@ doc components for the pango package.
 %package lib
 Summary: lib components for the pango package.
 Group: Libraries
-Requires: pango-data
-Requires: pango-license
+Requires: pango-data = %{version}-%{release}
+Requires: pango-license = %{version}-%{release}
 
 %description lib
 lib components for the pango package.
@@ -130,8 +132,8 @@ lib components for the pango package.
 %package lib32
 Summary: lib32 components for the pango package.
 Group: Default
-Requires: pango-data
-Requires: pango-license
+Requires: pango-data = %{version}-%{release}
+Requires: pango-license = %{version}-%{release}
 
 %description lib32
 lib32 components for the pango package.
@@ -155,6 +157,7 @@ man components for the pango package.
 
 %prep
 %setup -q -n pango-1.42.4
+%patch2 -p1
 pushd ..
 cp -a pango-1.42.4 build32
 popd
@@ -166,8 +169,9 @@ popd
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1536003423
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1563584041
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -180,9 +184,10 @@ make  %{?_smp_mflags}
 
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-export CFLAGS="$CFLAGS -m32"
-export CXXFLAGS="$CXXFLAGS -m32"
-export LDFLAGS="$LDFLAGS -m32"
+export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
+export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
+export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
+export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
 %configure --disable-static --enable-explicit-deps=yes  --with-included-modules=basic-fc --with-xft   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
 popd
@@ -195,10 +200,10 @@ export LDFLAGS="$LDFLAGS -m64 -march=haswell"
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1536003423
+export SOURCE_DATE_EPOCH=1563584041
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/pango
-cp COPYING %{buildroot}/usr/share/doc/pango/COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/pango
+cp COPYING %{buildroot}/usr/share/package-licenses/pango/COPYING
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -378,9 +383,9 @@ popd
 /usr/lib32/libpangoxft-1.0.so.0.4200.4
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/pango/COPYING
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/pango/COPYING
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/pango-view.1

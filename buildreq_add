@@ -2,7 +2,7 @@
 # This file contains extra pkgconfig build requirements that don't get picked up but are 
 # desirable. One name per line, no whitespace.
 #
-font-bitstream-type1
+xorg-fonts
 clear-font
 gobject-introspection-dev
 gobject-introspection
