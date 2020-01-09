@@ -14,3 +14,9 @@ libXrender-dev32
 fribidi-dev
 fribidi-dev32
 glib-dev
+fontconfig-dev
+fontconfig-dev32
+freetype-dev
+freetype-dev32
+cairo-dev32
+cairo-dev

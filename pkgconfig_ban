@@ -14,3 +14,5 @@ cairo-ps
 32cairo-xlib
 32cairo-png
 32fribidi
+32cairo-quartz
+cairo-quartz
