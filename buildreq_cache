@@ -1,7 +1,2 @@
-1.44.7
+1.46.1
 help2man
-pkg-config
-pkgconfig(32cairo-quartz)
-pkgconfig(32libthai)
-pkgconfig(cairo-quartz)
-pkgconfig(libthai)

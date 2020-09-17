@@ -1,3 +1,54 @@
+Overview of changes in 1.46.1
+=============================
+- Revert an unintentional PangoRenderer abi break in 1.46.0
+- Various small fixes
+
+Overview of changes in 1.46.0
+=============================
+- Bump version to 1.46
+
+Overview of changes in 1.45.5
+=============================
+- Export pango_color_parse_with_alpha
+- Stop using hb-glib
+
+Overview of changes in 1.45.4
+=============================
+- Fix build on Windows
+- Fix a pidgin crash
+- fc: Always reject unsupported font formats
+- coretext: Fix cairo scaling
+
+Overview of changes in 1.45.3
+=============================
+- Fix pango_attr_list_change
+- Fix crashes with empty attribute lists
+
+Overview of changes in 1.45.2
+=============================
+- Fix several crashes in gtk2 applications
+- Revert an unintentional introspection API change
+- Include HarfBuzz when igenerating introspection data
+
+Overview of changes in 1.45.1
+=============================
+- Undo PangoFontsetSimple deprecation
+- Annotation fixes for various apis
+- Add api to compare attribute lists
+- Update data tables to Unicode 13.0
+- Various test improvements
+- Require GLib 2.60
+
+Overview of changes in 1.45.0
+=============================
+- Some new font enumeration apis:
+  pango_font_map_get_family
+  pango_font_family_get_face
+  pango_font_face_get_family
+  pango_font_get_face
+- Support for line-wide underlines
+- Support for overlines
+
 Overview of changes in 1.44.7
 =============================
 - Fix tests without libthai
