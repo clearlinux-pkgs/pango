@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.46.2
-Release  : 68
+Release  : 69
 URL      : https://download.gnome.org/sources/pango/1.46/pango-1.46.2.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.46/pango-1.46.2.tar.xz
 Summary  : No detailed summary available
