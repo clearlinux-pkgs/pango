@@ -1,3 +1,21 @@
+Overview of changes in 1.48.4
+=============================
+- Include docs in the dist tarball
+- Include gi-docgen in the dist tarball, too
+- win32: Fix 'Cursive' fallback
+- Fix placement of marks in vertical text
+- Cache metrics for the current font
+- Improve letterspacing with combining marks
+
+Overview of changes in 1.48.3
+=============================
+- Miscellaneous introspection fixes
+- Make pango_attr_list_splice clip inserted attrbiutes
+- Do costly fontconfig calls in threads
+- markup: Fix issues with accel handling
+- docs: Convert docs to use gi-docgen
+- Fix build against harfbuzz < 2.6
+
 Overview of changes in 1.48.2
 =============================
 - Fix memory leaks reported by asan

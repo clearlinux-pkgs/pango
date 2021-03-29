@@ -1,12 +1,11 @@
-#
-# This file contains extra pkgconfig build requirements that don't get picked up but are 
-# desirable. One name per line, no whitespace.
-#
-xorg-fonts
+# This file contains additional build requirements that did not get
+# picked up automatically. One name per line, no whitespace.
+cairo-dev
 clear-font
-gobject-introspection-dev
-fribidi-dev
-glib-dev
 fontconfig-dev
 freetype-dev
-cairo-dev
+fribidi-dev
+glib-dev
+gobject-introspection-dev
+help2man
+xorg-fonts
