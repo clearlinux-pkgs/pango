@@ -1,1 +1,1 @@
-make check || :
+meson test -C builddir --print-errorlogs || :
