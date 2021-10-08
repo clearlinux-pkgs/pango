@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.49.1
-Release  : 82
+Release  : 83
 URL      : https://download.gnome.org/sources/pango/1.49/pango-1.49.1.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.49/pango-1.49.1.tar.xz
 Summary  : GObject-Introspection based documentation generator
@@ -12,6 +12,7 @@ Group    : Development/Tools
 License  : Apache-2.0 CC-BY-SA-3.0 CC0-1.0 GPL-3.0 LGPL-2.0 MIT OFL-1.1
 Requires: pango-bin = %{version}-%{release}
 Requires: pango-data = %{version}-%{release}
+Requires: pango-filemap = %{version}-%{release}
 Requires: pango-lib = %{version}-%{release}
 Requires: pango-license = %{version}-%{release}
 Requires: pango-man = %{version}-%{release}
@@ -39,6 +40,7 @@ Summary: bin components for the pango package.
 Group: Binaries
 Requires: pango-data = %{version}-%{release}
 Requires: pango-license = %{version}-%{release}
+Requires: pango-filemap = %{version}-%{release}
 
 %description bin
 bin components for the pango package.
@@ -65,11 +67,20 @@ Requires: pango = %{version}-%{release}
 dev components for the pango package.
 
 
+%package filemap
+Summary: filemap components for the pango package.
+Group: Default
+
+%description filemap
+filemap components for the pango package.
+
+
 %package lib
 Summary: lib components for the pango package.
 Group: Libraries
 Requires: pango-data = %{version}-%{release}
 Requires: pango-license = %{version}-%{release}
+Requires: pango-filemap = %{version}-%{release}
 
 %description lib
 lib components for the pango package.
@@ -103,7 +114,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1630600203
+export SOURCE_DATE_EPOCH=1633734088
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -114,7 +125,7 @@ export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=a
 export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Dgtk_doc=false  builddir
 ninja -v -C builddir
-CFLAGS="$CFLAGS -m64 -march=haswell" CXXFLAGS="$CXXFLAGS -m64 -march=haswell " LDFLAGS="$LDFLAGS -m64 -march=haswell" meson --libdir=lib64/haswell --prefix=/usr --buildtype=plain -Dgtk_doc=false  builddiravx2
+CFLAGS="$CFLAGS -m64 -march=x86-64-v3" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Dgtk_doc=false  builddiravx2
 ninja -v -C builddiravx2
 
 %check
@@ -133,23 +144,19 @@ cp %{_builddir}/pango-1.49.1/subprojects/gi-docgen/LICENSES/CC0-1.0.txt %{buildr
 cp %{_builddir}/pango-1.49.1/subprojects/gi-docgen/LICENSES/GPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/pango/31a3d460bb3c7d98845187c716a30db81c44b615
 cp %{_builddir}/pango-1.49.1/subprojects/gi-docgen/LICENSES/MIT.txt %{buildroot}/usr/share/package-licenses/pango/220906dfcc3d3b7f4e18cf8a22454c628ca0ea2e
 cp %{_builddir}/pango-1.49.1/subprojects/gi-docgen/LICENSES/OFL-1.1.txt %{buildroot}/usr/share/package-licenses/pango/8b8a351a8476e37a2c4d398eb1e6c8403f487ea4
-DESTDIR=%{buildroot} ninja -C builddiravx2 install
+DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 DESTDIR=%{buildroot} ninja -C builddir install
 
 %files
 %defattr(-,root,root,-)
-/usr/lib64/haswell/girepository-1.0/Pango-1.0.typelib
-/usr/lib64/haswell/girepository-1.0/PangoCairo-1.0.typelib
-/usr/lib64/haswell/girepository-1.0/PangoFT2-1.0.typelib
-/usr/lib64/haswell/girepository-1.0/PangoFc-1.0.typelib
-/usr/lib64/haswell/girepository-1.0/PangoOT-1.0.typelib
-/usr/lib64/haswell/girepository-1.0/PangoXft-1.0.typelib
 
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/pango-list
 /usr/bin/pango-segmentation
 /usr/bin/pango-view
+/usr/share/clear/optimized-elf/bin*
 
 %files data
 %defattr(-,root,root,-)
@@ -200,16 +207,6 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/include/pango-1.0/pango/pangoft2.h
 /usr/include/pango-1.0/pango/pangoxft-render.h
 /usr/include/pango-1.0/pango/pangoxft.h
-/usr/lib64/haswell/libpango-1.0.so
-/usr/lib64/haswell/libpangocairo-1.0.so
-/usr/lib64/haswell/libpangoft2-1.0.so
-/usr/lib64/haswell/libpangoxft-1.0.so
-/usr/lib64/haswell/pkgconfig/pango.pc
-/usr/lib64/haswell/pkgconfig/pangocairo.pc
-/usr/lib64/haswell/pkgconfig/pangofc.pc
-/usr/lib64/haswell/pkgconfig/pangoft2.pc
-/usr/lib64/haswell/pkgconfig/pangoot.pc
-/usr/lib64/haswell/pkgconfig/pangoxft.pc
 /usr/lib64/libpango-1.0.so
 /usr/lib64/libpangocairo-1.0.so
 /usr/lib64/libpangoft2-1.0.so
@@ -221,16 +218,12 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/lib64/pkgconfig/pangoot.pc
 /usr/lib64/pkgconfig/pangoxft.pc
 
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-pango
+
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/haswell/libpango-1.0.so.0
-/usr/lib64/haswell/libpango-1.0.so.0.4901.0
-/usr/lib64/haswell/libpangocairo-1.0.so.0
-/usr/lib64/haswell/libpangocairo-1.0.so.0.4901.0
-/usr/lib64/haswell/libpangoft2-1.0.so.0
-/usr/lib64/haswell/libpangoft2-1.0.so.0.4901.0
-/usr/lib64/haswell/libpangoxft-1.0.so.0
-/usr/lib64/haswell/libpangoxft-1.0.so.0.4901.0
 /usr/lib64/libpango-1.0.so.0
 /usr/lib64/libpango-1.0.so.0.4901.0
 /usr/lib64/libpangocairo-1.0.so.0
@@ -239,6 +232,7 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/lib64/libpangoft2-1.0.so.0.4901.0
 /usr/lib64/libpangoxft-1.0.so.0
 /usr/lib64/libpangoxft-1.0.so.0.4901.0
+/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)
