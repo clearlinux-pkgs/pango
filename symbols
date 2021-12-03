@@ -175,6 +175,7 @@ libpango-1.0.so.0:pango_font_description_to_filename
 libpango-1.0.so.0:pango_font_description_to_string
 libpango-1.0.so.0:pango_font_description_unset_fields
 libpango-1.0.so.0:pango_font_descriptions_free
+libpango-1.0.so.0:pango_font_deserialize
 libpango-1.0.so.0:pango_font_face_describe
 libpango-1.0.so.0:pango_font_face_get_face_name
 libpango-1.0.so.0:pango_font_face_get_family
@@ -467,6 +468,7 @@ libpango-1.0.so.0:pango_tab_align_get_type
 libpango-1.0.so.0:pango_tab_array_copy
 libpango-1.0.so.0:pango_tab_array_free
 libpango-1.0.so.0:pango_tab_array_from_string
+libpango-1.0.so.0:pango_tab_array_get_decimal_point
 libpango-1.0.so.0:pango_tab_array_get_positions_in_pixels
 libpango-1.0.so.0:pango_tab_array_get_size
 libpango-1.0.so.0:pango_tab_array_get_tab
@@ -475,7 +477,10 @@ libpango-1.0.so.0:pango_tab_array_get_type
 libpango-1.0.so.0:pango_tab_array_new
 libpango-1.0.so.0:pango_tab_array_new_with_positions
 libpango-1.0.so.0:pango_tab_array_resize
+libpango-1.0.so.0:pango_tab_array_set_decimal_point
+libpango-1.0.so.0:pango_tab_array_set_positions_in_pixels
 libpango-1.0.so.0:pango_tab_array_set_tab
+libpango-1.0.so.0:pango_tab_array_sort
 libpango-1.0.so.0:pango_tab_array_to_string
 libpango-1.0.so.0:pango_tailor_break
 libpango-1.0.so.0:pango_text_transform_get_type
