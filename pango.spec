@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.50.3
-Release  : 94
+Release  : 95
 URL      : https://download.gnome.org/sources/pango/1.50/pango-1.50.3.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.50/pango-1.50.3.tar.xz
 Summary  : GObject-Introspection based documentation generator
@@ -33,6 +33,7 @@ BuildRequires : pypi(markupsafe)
 BuildRequires : pypi(pygments)
 BuildRequires : pypi(setuptools)
 BuildRequires : pypi(toml)
+BuildRequires : pypi(typogrify)
 BuildRequires : pypi(wheel)
 BuildRequires : xorg-fonts
 
@@ -124,7 +125,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1640194096
+export SOURCE_DATE_EPOCH=1640890120
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
