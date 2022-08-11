@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.50.9
-Release  : 104
+Release  : 105
 URL      : https://download.gnome.org/sources/pango/1.50/pango-1.50.9.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.50/pango-1.50.9.tar.xz
 Summary  : GObject-Introspection based documentation generator
