@@ -4,7 +4,7 @@
 #
 Name     : pango
 Version  : 1.50.10
-Release  : 110
+Release  : 111
 URL      : https://download.gnome.org/sources/pango/1.50/pango-1.50.10.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.50/pango-1.50.10.tar.xz
 Summary  : GObject-Introspection based documentation generator
@@ -24,6 +24,7 @@ BuildRequires : clear-font
 BuildRequires : fontconfig-dev
 BuildRequires : freetype-dev
 BuildRequires : fribidi-dev
+BuildRequires : gi-docgen
 BuildRequires : glib-dev
 BuildRequires : gobject-introspection-dev
 BuildRequires : help2man
@@ -122,7 +123,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1663775843
+export SOURCE_DATE_EPOCH=1664161656
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -145,16 +146,16 @@ meson test -C builddir --print-errorlogs || :
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/pango
-cp %{_builddir}/pango-%{version}/COPYING %{buildroot}/usr/share/package-licenses/pango/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/Apache-2.0.txt %{buildroot}/usr/share/package-licenses/pango/2b8b815229aa8a61e483fb4ba0588b8b6c491890
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/CC-BY-SA-3.0.txt %{buildroot}/usr/share/package-licenses/pango/fb41626a3005c2b6e14b8b3f5d9d0b19b5faaa51
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/CC0-1.0.txt %{buildroot}/usr/share/package-licenses/pango/8287b608d3fa40ef401339fd907ca1260c964123
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/pango/3cb34cfc72e87654683f2894299adf912d14b284
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/GPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/pango/31a3d460bb3c7d98845187c716a30db81c44b615
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/LGPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/pango/5c6c38fa1b6ac7c66252c83d1203e997ae3d1c98
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/MIT.txt %{buildroot}/usr/share/package-licenses/pango/220906dfcc3d3b7f4e18cf8a22454c628ca0ea2e
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/MPL-1.1.txt %{buildroot}/usr/share/package-licenses/pango/ca2fd1439eb3e23507f13855e5450c5d617db83d
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/OFL-1.1.txt %{buildroot}/usr/share/package-licenses/pango/8b8a351a8476e37a2c4d398eb1e6c8403f487ea4
+cp %{_builddir}/pango-%{version}/COPYING %{buildroot}/usr/share/package-licenses/pango/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f || :
+cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/Apache-2.0.txt %{buildroot}/usr/share/package-licenses/pango/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
+cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/CC-BY-SA-3.0.txt %{buildroot}/usr/share/package-licenses/pango/fb41626a3005c2b6e14b8b3f5d9d0b19b5faaa51 || :
+cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/CC0-1.0.txt %{buildroot}/usr/share/package-licenses/pango/8287b608d3fa40ef401339fd907ca1260c964123 || :
+cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/pango/3cb34cfc72e87654683f2894299adf912d14b284 || :
+cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/GPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/pango/31a3d460bb3c7d98845187c716a30db81c44b615 || :
+cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/LGPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/pango/5c6c38fa1b6ac7c66252c83d1203e997ae3d1c98 || :
+cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/MIT.txt %{buildroot}/usr/share/package-licenses/pango/220906dfcc3d3b7f4e18cf8a22454c628ca0ea2e || :
+cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/MPL-1.1.txt %{buildroot}/usr/share/package-licenses/pango/ca2fd1439eb3e23507f13855e5450c5d617db83d || :
+cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/OFL-1.1.txt %{buildroot}/usr/share/package-licenses/pango/8b8a351a8476e37a2c4d398eb1e6c8403f487ea4 || :
 DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
 DESTDIR=%{buildroot} ninja -C builddir install
 /usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
