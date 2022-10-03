@@ -5,6 +5,7 @@ clear-font
 fontconfig-dev
 freetype-dev
 fribidi-dev
+gi-docgen
 glib-dev
 gobject-introspection-dev
 help2man
