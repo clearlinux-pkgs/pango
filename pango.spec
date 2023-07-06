@@ -5,7 +5,7 @@
 #
 Name     : pango
 Version  : 1.50.14
-Release  : 119
+Release  : 120
 URL      : https://download.gnome.org/sources/pango/1.50/pango-1.50.14.tar.xz
 Source0  : https://download.gnome.org/sources/pango/1.50/pango-1.50.14.tar.xz
 Summary  : GObject-Introspection based documentation generator
@@ -13,7 +13,6 @@ Group    : Development/Tools
 License  : Apache-2.0 CC-BY-SA-3.0 CC0-1.0 GPL-2.0 GPL-3.0 LGPL-2.0 MIT MPL-1.1 OFL-1.1
 Requires: pango-bin = %{version}-%{release}
 Requires: pango-data = %{version}-%{release}
-Requires: pango-filemap = %{version}-%{release}
 Requires: pango-lib = %{version}-%{release}
 Requires: pango-license = %{version}-%{release}
 Requires: pango-man = %{version}-%{release}
@@ -32,6 +31,7 @@ BuildRequires : xorg-fonts
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
+Patch1: 0001-Remove-werror-flags-from-build.patch
 
 %description
 The Pango backends written for Win32 is pangowin32. Pangowin32 uses
@@ -44,7 +44,6 @@ Summary: bin components for the pango package.
 Group: Binaries
 Requires: pango-data = %{version}-%{release}
 Requires: pango-license = %{version}-%{release}
-Requires: pango-filemap = %{version}-%{release}
 
 %description bin
 bin components for the pango package.
@@ -71,20 +70,11 @@ Requires: pango = %{version}-%{release}
 dev components for the pango package.
 
 
-%package filemap
-Summary: filemap components for the pango package.
-Group: Default
-
-%description filemap
-filemap components for the pango package.
-
-
 %package lib
 Summary: lib components for the pango package.
 Group: Libraries
 Requires: pango-data = %{version}-%{release}
 Requires: pango-license = %{version}-%{release}
-Requires: pango-filemap = %{version}-%{release}
 
 %description lib
 lib components for the pango package.
@@ -109,6 +99,7 @@ man components for the pango package.
 %prep
 %setup -q -n pango-1.50.14
 cd %{_builddir}/pango-1.50.14
+%patch -P 1 -p1
 pushd ..
 cp -a pango-1.50.14 buildavx2
 popd
@@ -118,15 +109,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1680041672
+export SOURCE_DATE_EPOCH=1688684661
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Dgtk_doc=false  builddir
 ninja -v -C builddir
 CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 -O3" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Dgtk_doc=false  builddiravx2
@@ -160,10 +151,12 @@ DESTDIR=%{buildroot} ninja -C builddir install
 
 %files bin
 %defattr(-,root,root,-)
+/V3/usr/bin/pango-list
+/V3/usr/bin/pango-segmentation
+/V3/usr/bin/pango-view
 /usr/bin/pango-list
 /usr/bin/pango-segmentation
 /usr/bin/pango-view
-/usr/share/clear/optimized-elf/bin*
 
 %files data
 %defattr(-,root,root,-)
@@ -215,10 +208,6 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/include/pango-1.0/pango/pangoft2.h
 /usr/include/pango-1.0/pango/pangoxft-render.h
 /usr/include/pango-1.0/pango/pangoxft.h
-/usr/lib64/glibc-hwcaps/x86-64-v3/libpango-1.0.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/libpangocairo-1.0.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/libpangoft2-1.0.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/libpangoxft-1.0.so
 /usr/lib64/libpango-1.0.so
 /usr/lib64/libpangocairo-1.0.so
 /usr/lib64/libpangoft2-1.0.so
@@ -230,20 +219,12 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/lib64/pkgconfig/pangoot.pc
 /usr/lib64/pkgconfig/pangoxft.pc
 
-%files filemap
-%defattr(-,root,root,-)
-/usr/share/clear/filemap/filemap-pango
-
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/glibc-hwcaps/x86-64-v3/libpango-1.0.so.0
-/usr/lib64/glibc-hwcaps/x86-64-v3/libpango-1.0.so.0.5000.14
-/usr/lib64/glibc-hwcaps/x86-64-v3/libpangocairo-1.0.so.0
-/usr/lib64/glibc-hwcaps/x86-64-v3/libpangocairo-1.0.so.0.5000.14
-/usr/lib64/glibc-hwcaps/x86-64-v3/libpangoft2-1.0.so.0
-/usr/lib64/glibc-hwcaps/x86-64-v3/libpangoft2-1.0.so.0.5000.14
-/usr/lib64/glibc-hwcaps/x86-64-v3/libpangoxft-1.0.so.0
-/usr/lib64/glibc-hwcaps/x86-64-v3/libpangoxft-1.0.so.0.5000.14
+/V3/usr/lib64/libpango-1.0.so.0.5000.14
+/V3/usr/lib64/libpangocairo-1.0.so.0.5000.14
+/V3/usr/lib64/libpangoft2-1.0.so.0.5000.14
+/V3/usr/lib64/libpangoxft-1.0.so.0.5000.14
 /usr/lib64/libpango-1.0.so.0
 /usr/lib64/libpango-1.0.so.0.5000.14
 /usr/lib64/libpangocairo-1.0.so.0

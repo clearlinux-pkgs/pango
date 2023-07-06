@@ -1,0 +1,64 @@
+From f3c43e27f434ed792cef7b95cbf03b961cf9af6b Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Thu, 6 Jul 2023 15:58:41 -0700
+Subject: [PATCH] Remove werror flags from build
+
+---
+ meson.build | 34 ----------------------------------
+ 1 file changed, 34 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 25c6760..2245a4c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -88,25 +88,6 @@ elif cc.get_id() == 'gcc' or cc.get_id() == 'clang'
+     '-Wundef',
+     '-Wuninitialized',
+     '-Wunused',
+-    '-Werror=address',
+-    '-Werror=array-bounds',
+-    '-Werror=empty-body',
+-    '-Werror=implicit',
+-    '-Werror=implicit-fallthrough',
+-    '-Werror=init-self',
+-    '-Werror=int-to-pointer-cast',
+-    '-Werror=main',
+-    '-Werror=missing-braces',
+-    '-Werror=missing-declarations',
+-    '-Werror=missing-prototypes',
+-    '-Werror=nonnull',
+-    '-Werror=pointer-to-int-cast',
+-    '-Werror=redundant-decls',
+-    '-Werror=return-type',
+-    '-Werror=sequence-point',
+-    '-Werror=trigraphs',
+-    '-Werror=vla',
+-    '-Werror=write-strings',
+   ]
+ 
+   test_cflags = test_c_only_flags + [
+@@ -124,21 +105,6 @@ elif cc.get_id() == 'gcc' or cc.get_id() == 'clang'
+     '-Wlogical-op',
+     '-Wno-uninitialized',
+     '-Wno-shadow',
+-    '-Werror=implicit-fallthrough',
+-    '-Werror=nonnull',
+-    '-Werror=init-self',
+-    '-Werror=main',
+-    '-Werror=missing-braces',
+-    '-Werror=sequence-point',
+-    '-Werror=return-type',
+-    '-Werror=trigraphs',
+-    '-Werror=array-bounds',
+-    '-Werror=write-strings',
+-    '-Werror=address',
+-    '-Werror=int-to-pointer-cast',
+-    '-Werror=empty-body',
+-    '-Werror=write-strings',
+-    '-Werror=unused-but-set-variable',
+     '-Wundef', # FIXME: https://bugzilla.gnome.org/show_bug.cgi?id=792481
+   ]
+ 
+-- 
+2.41.0
+
