@@ -4,13 +4,13 @@
 # Using build pattern: meson
 #
 Name     : pango
-Version  : 1.50.14
-Release  : 120
-URL      : https://download.gnome.org/sources/pango/1.50/pango-1.50.14.tar.xz
-Source0  : https://download.gnome.org/sources/pango/1.50/pango-1.50.14.tar.xz
-Summary  : GObject-Introspection based documentation generator
+Version  : 1.51.0
+Release  : 121
+URL      : https://download.gnome.org/sources/pango/1.51/pango-1.51.0.tar.xz
+Source0  : https://download.gnome.org/sources/pango/1.51/pango-1.51.0.tar.xz
+Summary  : No detailed summary available
 Group    : Development/Tools
-License  : Apache-2.0 CC-BY-SA-3.0 CC0-1.0 GPL-2.0 GPL-3.0 LGPL-2.0 MIT MPL-1.1 OFL-1.1
+License  : LGPL-2.0
 Requires: pango-bin = %{version}-%{release}
 Requires: pango-data = %{version}-%{release}
 Requires: pango-lib = %{version}-%{release}
@@ -31,7 +31,6 @@ BuildRequires : xorg-fonts
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
-Patch1: 0001-Remove-werror-flags-from-build.patch
 
 %description
 The Pango backends written for Win32 is pangowin32. Pangowin32 uses
@@ -97,11 +96,10 @@ man components for the pango package.
 
 
 %prep
-%setup -q -n pango-1.50.14
-cd %{_builddir}/pango-1.50.14
-%patch -P 1 -p1
+%setup -q -n pango-1.51.0
+cd %{_builddir}/pango-1.51.0
 pushd ..
-cp -a pango-1.50.14 buildavx2
+cp -a pango-1.51.0 buildavx2
 popd
 
 %build
@@ -109,7 +107,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1688684661
+export SOURCE_DATE_EPOCH=1691795377
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -133,15 +131,6 @@ meson test -C builddir --print-errorlogs || :
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/pango
 cp %{_builddir}/pango-%{version}/COPYING %{buildroot}/usr/share/package-licenses/pango/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f || :
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/Apache-2.0.txt %{buildroot}/usr/share/package-licenses/pango/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/CC-BY-SA-3.0.txt %{buildroot}/usr/share/package-licenses/pango/fb41626a3005c2b6e14b8b3f5d9d0b19b5faaa51 || :
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/CC0-1.0.txt %{buildroot}/usr/share/package-licenses/pango/8287b608d3fa40ef401339fd907ca1260c964123 || :
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/pango/3cb34cfc72e87654683f2894299adf912d14b284 || :
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/GPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/pango/31a3d460bb3c7d98845187c716a30db81c44b615 || :
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/LGPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/pango/5c6c38fa1b6ac7c66252c83d1203e997ae3d1c98 || :
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/MIT.txt %{buildroot}/usr/share/package-licenses/pango/220906dfcc3d3b7f4e18cf8a22454c628ca0ea2e || :
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/MPL-1.1.txt %{buildroot}/usr/share/package-licenses/pango/ca2fd1439eb3e23507f13855e5450c5d617db83d || :
-cp %{_builddir}/pango-%{version}/subprojects/gi-docgen/LICENSES/OFL-1.1.txt %{buildroot}/usr/share/package-licenses/pango/8b8a351a8476e37a2c4d398eb1e6c8403f487ea4 || :
 DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
 DESTDIR=%{buildroot} ninja -C builddir install
 /usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
@@ -221,31 +210,22 @@ DESTDIR=%{buildroot} ninja -C builddir install
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libpango-1.0.so.0.5000.14
-/V3/usr/lib64/libpangocairo-1.0.so.0.5000.14
-/V3/usr/lib64/libpangoft2-1.0.so.0.5000.14
-/V3/usr/lib64/libpangoxft-1.0.so.0.5000.14
+/V3/usr/lib64/libpango-1.0.so.0.5100.0
+/V3/usr/lib64/libpangocairo-1.0.so.0.5100.0
+/V3/usr/lib64/libpangoft2-1.0.so.0.5100.0
+/V3/usr/lib64/libpangoxft-1.0.so.0.5100.0
 /usr/lib64/libpango-1.0.so.0
-/usr/lib64/libpango-1.0.so.0.5000.14
+/usr/lib64/libpango-1.0.so.0.5100.0
 /usr/lib64/libpangocairo-1.0.so.0
-/usr/lib64/libpangocairo-1.0.so.0.5000.14
+/usr/lib64/libpangocairo-1.0.so.0.5100.0
 /usr/lib64/libpangoft2-1.0.so.0
-/usr/lib64/libpangoft2-1.0.so.0.5000.14
+/usr/lib64/libpangoft2-1.0.so.0.5100.0
 /usr/lib64/libpangoxft-1.0.so.0
-/usr/lib64/libpangoxft-1.0.so.0.5000.14
+/usr/lib64/libpangoxft-1.0.so.0.5100.0
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/pango/220906dfcc3d3b7f4e18cf8a22454c628ca0ea2e
-/usr/share/package-licenses/pango/2b8b815229aa8a61e483fb4ba0588b8b6c491890
-/usr/share/package-licenses/pango/31a3d460bb3c7d98845187c716a30db81c44b615
-/usr/share/package-licenses/pango/3cb34cfc72e87654683f2894299adf912d14b284
-/usr/share/package-licenses/pango/5c6c38fa1b6ac7c66252c83d1203e997ae3d1c98
-/usr/share/package-licenses/pango/8287b608d3fa40ef401339fd907ca1260c964123
-/usr/share/package-licenses/pango/8b8a351a8476e37a2c4d398eb1e6c8403f487ea4
 /usr/share/package-licenses/pango/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f
-/usr/share/package-licenses/pango/ca2fd1439eb3e23507f13855e5450c5d617db83d
-/usr/share/package-licenses/pango/fb41626a3005c2b6e14b8b3f5d9d0b19b5faaa51
 
 %files man
 %defattr(0644,root,root,0755)
