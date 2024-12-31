@@ -6,10 +6,10 @@
 # autospec commit: 5424026
 #
 Name     : pango
-Version  : 1.55.0
-Release  : 127
-URL      : https://download.gnome.org/sources/pango/1.55/pango-1.55.0.tar.xz
-Source0  : https://download.gnome.org/sources/pango/1.55/pango-1.55.0.tar.xz
+Version  : 1.55.5
+Release  : 128
+URL      : https://download.gnome.org/sources/pango/1.55/pango-1.55.5.tar.xz
+Source0  : https://download.gnome.org/sources/pango/1.55/pango-1.55.5.tar.xz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : LGPL-2.0
@@ -101,10 +101,10 @@ man components for the pango package.
 
 
 %prep
-%setup -q -n pango-1.55.0
-cd %{_builddir}/pango-1.55.0
+%setup -q -n pango-1.55.5
+cd %{_builddir}/pango-1.55.5
 pushd ..
-cp -a pango-1.55.0 buildavx2
+cp -a pango-1.55.5 buildavx2
 popd
 
 %build
@@ -112,7 +112,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1732729631
+export SOURCE_DATE_EPOCH=1735603657
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -242,18 +242,18 @@ DESTDIR=%{buildroot} ninja -C builddir install
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libpango-1.0.so.0.5500.0
-/V3/usr/lib64/libpangocairo-1.0.so.0.5500.0
-/V3/usr/lib64/libpangoft2-1.0.so.0.5500.0
-/V3/usr/lib64/libpangoxft-1.0.so.0.5500.0
+/V3/usr/lib64/libpango-1.0.so.0.5505.0
+/V3/usr/lib64/libpangocairo-1.0.so.0.5505.0
+/V3/usr/lib64/libpangoft2-1.0.so.0.5505.0
+/V3/usr/lib64/libpangoxft-1.0.so.0.5505.0
 /usr/lib64/libpango-1.0.so.0
-/usr/lib64/libpango-1.0.so.0.5500.0
+/usr/lib64/libpango-1.0.so.0.5505.0
 /usr/lib64/libpangocairo-1.0.so.0
-/usr/lib64/libpangocairo-1.0.so.0.5500.0
+/usr/lib64/libpangocairo-1.0.so.0.5505.0
 /usr/lib64/libpangoft2-1.0.so.0
-/usr/lib64/libpangoft2-1.0.so.0.5500.0
+/usr/lib64/libpangoft2-1.0.so.0.5505.0
 /usr/lib64/libpangoxft-1.0.so.0
-/usr/lib64/libpangoxft-1.0.so.0.5500.0
+/usr/lib64/libpangoxft-1.0.so.0.5505.0
 
 %files license
 %defattr(0644,root,root,0755)
