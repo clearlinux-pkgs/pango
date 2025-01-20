@@ -6,15 +6,14 @@
 # autospec commit: f4a13a5
 #
 Name     : pango
-Version  : 1.56.0
-Release  : 129
-URL      : https://download.gnome.org/sources/pango/1.56/pango-1.56.0.tar.xz
-Source0  : https://download.gnome.org/sources/pango/1.56/pango-1.56.0.tar.xz
+Version  : 1.56.1
+Release  : 130
+URL      : https://download.gnome.org/sources/pango/1.56/pango-1.56.1.tar.xz
+Source0  : https://download.gnome.org/sources/pango/1.56/pango-1.56.1.tar.xz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : LGPL-2.0
 Requires: pango-bin = %{version}-%{release}
-Requires: pango-data = %{version}-%{release}
 Requires: pango-lib = %{version}-%{release}
 Requires: pango-license = %{version}-%{release}
 BuildRequires : buildreq-gnome
@@ -28,6 +27,7 @@ BuildRequires : gi-docgen
 BuildRequires : glib-dev
 BuildRequires : gobject-introspection-dev
 BuildRequires : help2man
+BuildRequires : pypi-docutils
 BuildRequires : xorg-fonts
 # Suppress stripping binaries
 %define __strip /bin/true
@@ -45,19 +45,10 @@ and font handling for GTK.
 %package bin
 Summary: bin components for the pango package.
 Group: Binaries
-Requires: pango-data = %{version}-%{release}
 Requires: pango-license = %{version}-%{release}
 
 %description bin
 bin components for the pango package.
-
-
-%package data
-Summary: data components for the pango package.
-Group: Data
-
-%description data
-data components for the pango package.
 
 
 %package dev
@@ -65,7 +56,6 @@ Summary: dev components for the pango package.
 Group: Development
 Requires: pango-lib = %{version}-%{release}
 Requires: pango-bin = %{version}-%{release}
-Requires: pango-data = %{version}-%{release}
 Provides: pango-devel = %{version}-%{release}
 Requires: pango = %{version}-%{release}
 
@@ -76,7 +66,6 @@ dev components for the pango package.
 %package lib
 Summary: lib components for the pango package.
 Group: Libraries
-Requires: pango-data = %{version}-%{release}
 Requires: pango-license = %{version}-%{release}
 
 %description lib
@@ -92,10 +81,10 @@ license components for the pango package.
 
 
 %prep
-%setup -q -n pango-1.56.0
-cd %{_builddir}/pango-1.56.0
+%setup -q -n pango-1.56.1
+cd %{_builddir}/pango-1.56.1
 pushd ..
-cp -a pango-1.56.0 buildavx2
+cp -a pango-1.56.1 buildavx2
 popd
 
 %build
@@ -103,7 +92,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1736455917
+export SOURCE_DATE_EPOCH=1737393805
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -170,16 +159,6 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/bin/pango-segmentation
 /usr/bin/pango-view
 
-%files data
-%defattr(-,root,root,-)
-/usr/lib64/girepository-1.0/Pango-1.0.typelib
-/usr/lib64/girepository-1.0/PangoCairo-1.0.typelib
-/usr/lib64/girepository-1.0/PangoFT2-1.0.typelib
-/usr/lib64/girepository-1.0/PangoFc-1.0.typelib
-/usr/lib64/girepository-1.0/PangoOT-1.0.typelib
-/usr/lib64/girepository-1.0/PangoXft-1.0.typelib
-/usr/share/gir-1.0/*.gir
-
 %files dev
 %defattr(-,root,root,-)
 /usr/include/pango-1.0/pango/pango-attributes.h
@@ -233,18 +212,18 @@ DESTDIR=%{buildroot} ninja -C builddir install
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libpango-1.0.so.0.5600.0
-/V3/usr/lib64/libpangocairo-1.0.so.0.5600.0
-/V3/usr/lib64/libpangoft2-1.0.so.0.5600.0
-/V3/usr/lib64/libpangoxft-1.0.so.0.5600.0
+/V3/usr/lib64/libpango-1.0.so.0.5600.1
+/V3/usr/lib64/libpangocairo-1.0.so.0.5600.1
+/V3/usr/lib64/libpangoft2-1.0.so.0.5600.1
+/V3/usr/lib64/libpangoxft-1.0.so.0.5600.1
 /usr/lib64/libpango-1.0.so.0
-/usr/lib64/libpango-1.0.so.0.5600.0
+/usr/lib64/libpango-1.0.so.0.5600.1
 /usr/lib64/libpangocairo-1.0.so.0
-/usr/lib64/libpangocairo-1.0.so.0.5600.0
+/usr/lib64/libpangocairo-1.0.so.0.5600.1
 /usr/lib64/libpangoft2-1.0.so.0
-/usr/lib64/libpangoft2-1.0.so.0.5600.0
+/usr/lib64/libpangoft2-1.0.so.0.5600.1
 /usr/lib64/libpangoxft-1.0.so.0
-/usr/lib64/libpangoxft-1.0.so.0.5600.0
+/usr/lib64/libpangoxft-1.0.so.0.5600.1
 
 %files license
 %defattr(0644,root,root,0755)
