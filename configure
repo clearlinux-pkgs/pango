@@ -1,1 +1,2 @@
 -Dgtk_doc=false
+-Dintrospection=enabled
